@@ -140,7 +140,7 @@ class PageControllerTest extends WebTestCase
     /**
      * scenario 1.15
      */
-    public function testCreateDeleteTestPage()
+    public function testCreateDeleteTestPageMeta()
     {
         $client = static::createClient();
 
@@ -197,14 +197,18 @@ class PageControllerTest extends WebTestCase
             'test page title',
             $client->getResponse()->getContent()
         );
-
+    } 
+    
+    /**
+     * scenario 1.16
+     */
+    public function testDeleteContactUsPage()
+    {
+        $client = static::createClient();
         // now if we remove contact_us page, ie id 5, all its page meta should be deleted
         $crawler = $client->request('GET', '/bpeh_page/5');
-        // at show pagemeta, click delete
         $form = $crawler->selectButton('Delete')->form();
         $crawler = $client->submit($form);
-
-        // follow redirect to show pagemeta
         $crawler = $client->followRedirect();
         
         $this->assertNotContains(
@@ -216,5 +220,4 @@ class PageControllerTest extends WebTestCase
         $res = $client->getContainer()->get('doctrine')->getRepository('BpehNestablePageBundle:PageMeta')->findByPage(5);
         $this->assertEquals(0, count($res));
     } 
-    
 }
