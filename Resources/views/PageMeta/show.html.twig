@@ -1,0 +1,57 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>PageMeta</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Page Slug</th>
+                <td>{{ entity.page }}</td>
+            </tr>
+            <tr>
+                <th>Page_title</th>
+                <td>{{ entity.pagetitle }}</td>
+            </tr>
+            <tr>
+                <th>Menu_title</th>
+                <td>{{ entity.menutitle }}</td>
+            </tr>
+            <tr>
+                <th>Locale</th>
+                <td>{{ entity.locale }}</td>
+            </tr>
+            <tr>
+                <th>Short_description</th>
+                <td>{{ entity.shortdescription }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ entity.content }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul class="record_actions">
+    <li>
+        <a href="{{ path('songbird_page_show', {'id': entity.page.getId()} ) }}">
+            View Page
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('songbird_pagemeta', {'id': entity.page.getId()}) }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('songbird_pagemeta_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

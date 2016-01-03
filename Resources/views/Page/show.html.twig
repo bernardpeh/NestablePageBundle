@@ -1,0 +1,53 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Page</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ entity.slug }}</td>
+            </tr>
+            <tr>
+                <th>Ispublished</th>
+                <td>{{ entity.isPublished }}</td>
+            </tr>
+            <tr>
+                <th>Sequence</th>
+                <td>{{ entity.sequence }}</td>
+            </tr>
+            <tr>
+                <th>Modified</th>
+                <td>{{ entity.modified|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ entity.created|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('songbird_page') }}">
+            Back to the list
+        </a>
+    </li>
+     <li>
+        <a href="{{ path('songbird_pagemeta', { 'id': entity.id }) }}">
+            View PageMeta
+        </a>
+    </li> 
+    <li>
+        <a href="{{ path('songbird_page_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
