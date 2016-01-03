@@ -1,6 +1,6 @@
 <?php
 
-namespace Songbird\NestablePageBundle\Entity;
+namespace Bpeh\NestablePageBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

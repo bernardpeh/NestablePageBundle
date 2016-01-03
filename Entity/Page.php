@@ -1,6 +1,6 @@
 <?php
 
-namespace Songbird\NestablePageBundle\Entity;
+namespace Bpeh\NestablePageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Page
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Songbird\NestablePageBundle\Entity\PageRepository")
+ * @ORM\Entity(repositoryClass="Bpeh\NestablePageBundle\Entity\PageRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Page
@@ -72,7 +72,7 @@ class Page
     private $children;
    
     /**
-     * @ORM\OneToMany(targetEntity="Songbird\NestablePageBundle\Entity\PageMeta", mappedBy="page", cascade={"persist"}))
+     * @ORM\OneToMany(targetEntity="Bpeh\NestablePageBundle\Entity\PageMeta", mappedBy="page", cascade={"persist"}))
      */
     private $pageMetas;
     
@@ -227,10 +227,10 @@ class Page
     /**
      * Set parent
      *
-     * @param \Songbird\NestablePageBundle\Entity\Page $parent
+     * @param \Bpeh\NestablePageBundle\Entity\Page $parent
      * @return Page
      */
-    public function setParent(\Songbird\NestablePageBundle\Entity\Page $parent = null)
+    public function setParent(\Bpeh\NestablePageBundle\Entity\Page $parent = null)
     {
         $this->parent = $parent;
 
@@ -240,7 +240,7 @@ class Page
     /**
      * Get parent
      *
-     * @return \Songbird\NestablePageBundle\Entity\Page 
+     * @return \Bpeh\NestablePageBundle\Entity\Page 
      */
     public function getParent()
     {
@@ -250,10 +250,10 @@ class Page
     /**
      * Add children
      *
-     * @param \Songbird\NestablePageBundle\Entity\Page $children
+     * @param \Bpeh\NestablePageBundle\Entity\Page $children
      * @return Page
      */
-    public function addChild(\Songbird\NestablePageBundle\Entity\Page $children)
+    public function addChild(\Bpeh\NestablePageBundle\Entity\Page $children)
     {
         $this->children[] = $children;
 
@@ -263,9 +263,9 @@ class Page
     /**
      * Remove children
      *
-     * @param \Songbird\NestablePageBundle\Entity\Page $children
+     * @param \Bpeh\NestablePageBundle\Entity\Page $children
      */
-    public function removeChild(\Songbird\NestablePageBundle\Entity\Page $children)
+    public function removeChild(\Bpeh\NestablePageBundle\Entity\Page $children)
     {
         $this->children->removeElement($children);
     }
@@ -283,10 +283,10 @@ class Page
     /**
      * Add pageMetas
      *
-     * @param \Songbird\NestablePageBundle\Entity\PageMeta $pageMetas
+     * @param \Bpeh\NestablePageBundle\Entity\PageMeta $pageMetas
      * @return Page
      */
-    public function addPageMeta(\Songbird\NestablePageBundle\Entity\PageMeta $pageMetas)
+    public function addPageMeta(\Bpeh\NestablePageBundle\Entity\PageMeta $pageMetas)
     {
         $this->pageMetas[] = $pageMetas;
 
@@ -296,9 +296,9 @@ class Page
     /**
      * Remove pageMetas
      *
-     * @param \Songbird\NestablePageBundle\Entity\PageMeta $pageMetas
+     * @param \Bpeh\NestablePageBundle\Entity\PageMeta $pageMetas
      */
-    public function removePageMeta(\Songbird\NestablePageBundle\Entity\PageMeta $pageMetas)
+    public function removePageMeta(\Bpeh\NestablePageBundle\Entity\PageMeta $pageMetas)
     {
         $this->pageMetas->removeElement($pageMetas);
     }

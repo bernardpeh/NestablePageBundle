@@ -1,6 +1,6 @@
 <?php
 
-namespace Songbird\NestablePageBundle\Entity;
+namespace Bpeh\NestablePageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -57,7 +57,7 @@ class PageMeta
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Songbird\NestablePageBundle\Entity\Page", inversedBy="pageMetas")
+     * @ORM\ManyToOne(targetEntity="Bpeh\NestablePageBundle\Entity\Page", inversedBy="pageMetas")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="CASCADE")}
      */
     private $page;
@@ -199,10 +199,10 @@ class PageMeta
     /**
      * Set page
      *
-     * @param \Songbird\NestablePageBundle\Entity\Page $page
+     * @param \Bpeh\NestablePageBundle\Entity\Page $page
      * @return PageMeta
      */
-    public function setPage(\Songbird\NestablePageBundle\Entity\Page $page = null)
+    public function setPage(\Bpeh\NestablePageBundle\Entity\Page $page = null)
     {
         $this->page = $page;
 
@@ -212,7 +212,7 @@ class PageMeta
     /**
      * Get page
      *
-     * @return \Songbird\NestablePageBundle\Entity\Page 
+     * @return \Bpeh\NestablePageBundle\Entity\Page 
      */
     public function getPage()
     {

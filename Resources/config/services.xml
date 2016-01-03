@@ -6,7 +6,7 @@
 
     <!--
     <services>
-        <service id="songbird_nestable_page.example" class="Songbird\NestablePageBundle\Example">
+        <service id="bpeh_nestable_page.example" class="Bpeh\NestablePageBundle\Example">
             <argument type="service" id="service_id" />
             <argument>plain_value</argument>
             <argument>%parameter_name%</argument>

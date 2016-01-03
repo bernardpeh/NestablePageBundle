@@ -1,6 +1,6 @@
 <?php
 
-namespace Songbird\NestablePageBundle\Form;
+namespace Bpeh\NestablePageBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,7 +30,7 @@ class PageMetaType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Songbird\NestablePageBundle\Entity\PageMeta'
+            'data_class' => 'Bpeh\NestablePageBundle\Entity\PageMeta'
         ));
     }
 
@@ -39,6 +39,6 @@ class PageMetaType extends AbstractType
      */
     public function getName()
     {
-        return 'songbird_nestablepagebundle_pagemeta';
+        return 'bpeh_nestablepagebundle_pagemeta';
     }
 }

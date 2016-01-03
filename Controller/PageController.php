@@ -1,20 +1,20 @@
 <?php
 
-namespace Songbird\NestablePageBundle\Controller;
+namespace Bpeh\NestablePageBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Songbird\NestablePageBundle\Entity\Page;
-use Songbird\NestablePageBundle\Form\PageType;
+use Bpeh\NestablePageBundle\Entity\Page;
+use Bpeh\NestablePageBundle\Form\PageType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Page controller.
  *
- * @Route("/songbird_page")
+ * @Route("/bpeh_page")
  */
 class PageController extends Controller
 {
@@ -22,7 +22,7 @@ class PageController extends Controller
     /**
      * Lists all Page entities.
      *
-     * @Route("/", name="songbird_page")
+     * @Route("/", name="bpeh_page")
      * @Method("GET")
      * @Template()
      */
@@ -30,18 +30,18 @@ class PageController extends Controller
     {
         // $em = $this->getDoctrine()->getManager();
 
-        // $entities = $em->getRepository('SongbirdNestablePageBundle:Page')->findAll();
+        // $entities = $em->getRepository('BpehNestablePageBundle:Page')->findAll();
 
         // return array(
         //     'entities' => $entities,
         // );
-        return $this->redirect($this->generateUrl('songbird_page_list'));
+        return $this->redirect($this->generateUrl('bpeh_page_list'));
     }
 
         /**
      * Lists all nested page
      *
-     * @Route("/list", name="songbird_page_list")
+     * @Route("/list", name="bpeh_page_list")
      * @Method("GET")
      * @Template()
      */
@@ -49,7 +49,7 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         // $rootMenuItems = $em->getRepository('SongbirdPageBundle:Page')->findParentByLocale($this->get('request')->getLocale());
-        $rootMenuItems = $em->getRepository('SongbirdNestablePageBundle:Page')->findParent();
+        $rootMenuItems = $em->getRepository('BpehNestablePageBundle:Page')->findParent();
 
         return array(
             'tree' => $rootMenuItems,
@@ -59,7 +59,7 @@ class PageController extends Controller
     /**
      * reorder pages
      *
-     * @Route("/reorder", name="songbird_page_reorder")
+     * @Route("/reorder", name="bpeh_page_reorder")
      * @Method("POST")
      * @Template()
      */
@@ -73,10 +73,10 @@ class PageController extends Controller
         // new sequence of this element. 0 means first element.
         $position = $this->get('request')->get('position');
 
-        $result = $em->getRepository('SongbirdNestablePageBundle:Page')->reorderElement($id, $parentId, $position); 
+        $result = $em->getRepository('BpehNestablePageBundle:Page')->reorderElement($id, $parentId, $position); 
 
         return new JsonResponse(
-            array('message' => $this->get('translator')->trans($result[0], array(), 'SongbirdNestablePageBundle')
+            array('message' => $this->get('translator')->trans($result[0], array(), 'BpehNestablePageBundle')
 , 'success' => $result[1])
         );
 
@@ -85,9 +85,9 @@ class PageController extends Controller
     /**
      * Creates a new Page entity.
      *
-     * @Route("/", name="songbird_page_create")
+     * @Route("/", name="bpeh_page_create")
      * @Method("POST")
-     * @Template("SongbirdNestablePageBundle:Page:new.html.twig")
+     * @Template("BpehNestablePageBundle:Page:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -100,7 +100,7 @@ class PageController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('songbird_page_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('bpeh_page_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -119,7 +119,7 @@ class PageController extends Controller
     private function createCreateForm(Page $entity)
     {
         $form = $this->createForm(new PageType(), $entity, array(
-            'action' => $this->generateUrl('songbird_page_create'),
+            'action' => $this->generateUrl('bpeh_page_create'),
             'method' => 'POST',
         ));
 
@@ -131,7 +131,7 @@ class PageController extends Controller
     /**
      * Displays a form to create a new Page entity.
      *
-     * @Route("/new", name="songbird_page_new")
+     * @Route("/new", name="bpeh_page_new")
      * @Method("GET")
      * @Template()
      */
@@ -149,7 +149,7 @@ class PageController extends Controller
     /**
      * Finds and displays a Page entity.
      *
-     * @Route("/{id}", name="songbird_page_show")
+     * @Route("/{id}", name="bpeh_page_show")
      * @Method("GET")
      * @Template()
      */
@@ -157,7 +157,7 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SongbirdNestablePageBundle:Page')->find($id);
+        $entity = $em->getRepository('BpehNestablePageBundle:Page')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Page entity.');
@@ -174,7 +174,7 @@ class PageController extends Controller
     /**
      * Displays a form to edit an existing Page entity.
      *
-     * @Route("/{id}/edit", name="songbird_page_edit")
+     * @Route("/{id}/edit", name="bpeh_page_edit")
      * @Method("GET")
      * @Template()
      */
@@ -182,7 +182,7 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SongbirdNestablePageBundle:Page')->find($id);
+        $entity = $em->getRepository('BpehNestablePageBundle:Page')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Page entity.');
@@ -208,7 +208,7 @@ class PageController extends Controller
     private function createEditForm(Page $entity)
     {
         $form = $this->createForm(new PageType(), $entity, array(
-            'action' => $this->generateUrl('songbird_page_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('bpeh_page_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -219,15 +219,15 @@ class PageController extends Controller
     /**
      * Edits an existing Page entity.
      *
-     * @Route("/{id}", name="songbird_page_update")
+     * @Route("/{id}", name="bpeh_page_update")
      * @Method("PUT")
-     * @Template("SongbirdNestablePageBundle:Page:edit.html.twig")
+     * @Template("BpehNestablePageBundle:Page:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SongbirdNestablePageBundle:Page')->find($id);
+        $entity = $em->getRepository('BpehNestablePageBundle:Page')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Page entity.');
@@ -240,7 +240,7 @@ class PageController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('songbird_page_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('bpeh_page_edit', array('id' => $id)));
         }
 
         return array(
@@ -252,7 +252,7 @@ class PageController extends Controller
     /**
      * Deletes a Page entity.
      *
-     * @Route("/{id}", name="songbird_page_delete")
+     * @Route("/{id}", name="bpeh_page_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -262,7 +262,7 @@ class PageController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('SongbirdNestablePageBundle:Page')->find($id);
+            $entity = $em->getRepository('BpehNestablePageBundle:Page')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Page entity.');
@@ -272,7 +272,7 @@ class PageController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('songbird_page'));
+        return $this->redirect($this->generateUrl('bpeh_page'));
     }
 
     /**
@@ -285,7 +285,7 @@ class PageController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('songbird_page_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('bpeh_page_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

@@ -1,19 +1,19 @@
 <?php
 
-namespace Songbird\NestablePageBundle\Controller;
+namespace Bpeh\NestablePageBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Songbird\NestablePageBundle\Entity\PageMeta;
-use Songbird\NestablePageBundle\Form\PageMetaType;
+use Bpeh\NestablePageBundle\Entity\PageMeta;
+use Bpeh\NestablePageBundle\Form\PageMetaType;
 
 /**
  * PageMeta controller.
  *
- * @Route("/songbird_pagemeta")
+ * @Route("/bpeh_pagemeta")
  */
 class PageMetaController extends Controller
 {
@@ -21,7 +21,7 @@ class PageMetaController extends Controller
     /**
      * Lists all PageMeta entities.
      *
-     * @Route("/page/{id}", name="songbird_pagemeta")
+     * @Route("/page/{id}", name="bpeh_pagemeta")
      * @Method("GET")
      * @Template()
      */
@@ -29,7 +29,7 @@ class PageMetaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('SongbirdNestablePageBundle:PageMeta')->findByPage($id);
+        $entities = $em->getRepository('BpehNestablePageBundle:PageMeta')->findByPage($id);
 
         return array(
             'entities' => $entities,
@@ -39,9 +39,9 @@ class PageMetaController extends Controller
     /**
      * Creates a new PageMeta entity.
      *
-     * @Route("/", name="songbird_pagemeta_create")
+     * @Route("/", name="bpeh_pagemeta_create")
      * @Method("POST")
-     * @Template("SongbirdNestablePageBundle:PageMeta:new.html.twig")
+     * @Template("BpehNestablePageBundle:PageMeta:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -54,7 +54,7 @@ class PageMetaController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('songbird_pagemeta_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('bpeh_pagemeta_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -73,7 +73,7 @@ class PageMetaController extends Controller
     private function createCreateForm(PageMeta $entity)
     {
         $form = $this->createForm(new PageMetaType(), $entity, array(
-            'action' => $this->generateUrl('songbird_pagemeta_create'),
+            'action' => $this->generateUrl('bpeh_pagemeta_create'),
             'method' => 'POST',
         ));
 
@@ -85,7 +85,7 @@ class PageMetaController extends Controller
     /**
      * Displays a form to create a new PageMeta entity.
      *
-     * @Route("/new", name="songbird_pagemeta_new")
+     * @Route("/new", name="bpeh_pagemeta_new")
      * @Method("GET")
      * @Template()
      */
@@ -103,7 +103,7 @@ class PageMetaController extends Controller
     /**
      * Finds and displays a PageMeta entity.
      *
-     * @Route("/{id}", name="songbird_pagemeta_show")
+     * @Route("/{id}", name="bpeh_pagemeta_show")
      * @Method("GET")
      * @Template()
      */
@@ -111,7 +111,7 @@ class PageMetaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SongbirdNestablePageBundle:PageMeta')->find($id);
+        $entity = $em->getRepository('BpehNestablePageBundle:PageMeta')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find PageMeta entity.');
@@ -128,7 +128,7 @@ class PageMetaController extends Controller
     /**
      * Displays a form to edit an existing PageMeta entity.
      *
-     * @Route("/{id}/edit", name="songbird_pagemeta_edit")
+     * @Route("/{id}/edit", name="bpeh_pagemeta_edit")
      * @Method("GET")
      * @Template()
      */
@@ -136,7 +136,7 @@ class PageMetaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SongbirdNestablePageBundle:PageMeta')->find($id);
+        $entity = $em->getRepository('BpehNestablePageBundle:PageMeta')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find PageMeta entity.');
@@ -162,7 +162,7 @@ class PageMetaController extends Controller
     private function createEditForm(PageMeta $entity)
     {
         $form = $this->createForm(new PageMetaType(), $entity, array(
-            'action' => $this->generateUrl('songbird_pagemeta_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('bpeh_pagemeta_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -173,15 +173,15 @@ class PageMetaController extends Controller
     /**
      * Edits an existing PageMeta entity.
      *
-     * @Route("/{id}", name="songbird_pagemeta_update")
+     * @Route("/{id}", name="bpeh_pagemeta_update")
      * @Method("PUT")
-     * @Template("SongbirdNestablePageBundle:PageMeta:edit.html.twig")
+     * @Template("BpehNestablePageBundle:PageMeta:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('SongbirdNestablePageBundle:PageMeta')->find($id);
+        $entity = $em->getRepository('BpehNestablePageBundle:PageMeta')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find PageMeta entity.');
@@ -194,7 +194,7 @@ class PageMetaController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('songbird_pagemeta_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('bpeh_pagemeta_edit', array('id' => $id)));
         }
 
         return array(
@@ -206,7 +206,7 @@ class PageMetaController extends Controller
     /**
      * Deletes a PageMeta entity.
      *
-     * @Route("/{id}", name="songbird_pagemeta_delete")
+     * @Route("/{id}", name="bpeh_pagemeta_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -216,7 +216,7 @@ class PageMetaController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('SongbirdNestablePageBundle:PageMeta')->find($id);
+            $entity = $em->getRepository('BpehNestablePageBundle:PageMeta')->find($id);
             $pageId = $entity->getPage()->getId();
 
             if (!$entity) {
@@ -227,7 +227,7 @@ class PageMetaController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('songbird_pagemeta', array('id' => $pageId)));
+        return $this->redirect($this->generateUrl('bpeh_pagemeta', array('id' => $pageId)));
     }
 
     /**
@@ -240,7 +240,7 @@ class PageMetaController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('songbird_pagemeta_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('bpeh_pagemeta_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

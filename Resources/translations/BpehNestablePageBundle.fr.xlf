@@ -4,15 +4,15 @@
         <body>
             <trans-unit id="1">
                 <source>menu.page_management</source>
-                <target>Page Management</target>
+                <target>Gestion de la page</target>
             </trans-unit>
             <trans-unit id="2">
                 <source>flash_reorder_instructions</source>
-                <target>click and drag to reorder menu</target>
+                <target>cliquer et faire glisser pour réorganiser le menu</target>
             </trans-unit>
             <trans-unit id="3">
                 <source>flash_reorder_edit_success</source>
-                <target>menu has been reordered successfully</target>
+                <target>menu a été réorganisé avec succès</target>
             </trans-unit>
         </body>
     </file>
