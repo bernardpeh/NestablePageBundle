@@ -1,6 +1,6 @@
 <?php
 
-namespace Bpeh\NestablePageBundle\DependencyInjection;
+namespace Bpeh\NestablePageBundle\PageTestBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,19 +18,12 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('bpeh_nestable_page');
+        $rootNode = $treeBuilder->root('my_test_page');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
-        $rootNode
-            ->children()
-                ->scalarNode('page_entity')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Entity\Page')->end()
-                ->scalarNode('pagemeta_entity')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Entity\PageMeta')->end()
-                ->scalarNode('page_type')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Form\PageType')->end()
-                ->scalarNode('pagemeta_type')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Form\PageMetaType')->end()
-            ->end()
-        ;
+
         return $treeBuilder;
     }
 }

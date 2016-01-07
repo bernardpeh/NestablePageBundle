@@ -7,8 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Bpeh\NestablePageBundle\Entity\Page;
-use Bpeh\NestablePageBundle\Form\PageType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -19,6 +17,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class PageController extends Controller
 {
 
+    private $entity;
+
+    private $page_type;
+
+    public function __construct()
+    {
+        $this->entity = $this->container->getParameter('bpeh_nestable_page.page_entity');
+        $this->page_type = $this->container->getParameter('bpeh_nestable_page.page_type');
+    }
+    
     /**
      * Lists all Page entities.
      *
@@ -28,13 +36,6 @@ class PageController extends Controller
      */
     public function indexAction()
     {
-        // $em = $this->getDoctrine()->getManager();
-
-        // $entities = $em->getRepository('BpehNestablePageBundle:Page')->findAll();
-
-        // return array(
-        //     'entities' => $entities,
-        // );
         return $this->redirect($this->generateUrl('bpeh_page_list'));
     }
 
@@ -48,8 +49,7 @@ class PageController extends Controller
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
-        // $rootMenuItems = $em->getRepository('SongbirdPageBundle:Page')->findParentByLocale($this->get('request')->getLocale());
-        $rootMenuItems = $em->getRepository('BpehNestablePageBundle:Page')->findParent();
+        $rootMenuItems = $em->getRepository($this->entity)->findParent();
 
         return array(
             'tree' => $rootMenuItems,
@@ -73,7 +73,7 @@ class PageController extends Controller
         // new sequence of this element. 0 means first element.
         $position = $this->get('request')->get('position');
 
-        $result = $em->getRepository('BpehNestablePageBundle:Page')->reorderElement($id, $parentId, $position); 
+        $result = $em->getRepository($this->entity)->reorderElement($id, $parentId, $position); 
 
         return new JsonResponse(
             array('message' => $this->get('translator')->trans($result[0], array(), 'BpehNestablePageBundle')
@@ -91,7 +91,8 @@ class PageController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Page();
+        
+        $entity = new $this->entity();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -118,7 +119,7 @@ class PageController extends Controller
      */
     private function createCreateForm(Page $entity)
     {
-        $form = $this->createForm(new PageType(), $entity, array(
+        $form = $this->createForm(new $this->page_type(), $entity, array(
             'action' => $this->generateUrl('bpeh_page_create'),
             'method' => 'POST',
         ));
@@ -137,7 +138,8 @@ class PageController extends Controller
      */
     public function newAction()
     {
-        $entity = new Page();
+
+        $entity = new $this->entity();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -157,7 +159,7 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BpehNestablePageBundle:Page')->find($id);
+        $entity = $em->getRepository($this->entity)->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Page entity.');
@@ -182,7 +184,7 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BpehNestablePageBundle:Page')->find($id);
+        $entity = $em->getRepository($this->entity)->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Page entity.');
@@ -205,9 +207,9 @@ class PageController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Page $entity)
+    private function createEditForm($entity)
     {
-        $form = $this->createForm(new PageType(), $entity, array(
+        $form = $this->createForm(new $this->page_type(), $entity, array(
             'action' => $this->generateUrl('bpeh_page_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -227,7 +229,7 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BpehNestablePageBundle:Page')->find($id);
+        $entity = $em->getRepository($this->entity)->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Page entity.');
@@ -262,7 +264,7 @@ class PageController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('BpehNestablePageBundle:Page')->find($id);
+            $entity = $em->getRepository($this->entity)->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Page entity.');

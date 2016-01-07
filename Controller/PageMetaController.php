@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Bpeh\NestablePageBundle\Entity\PageMeta;
 use Bpeh\NestablePageBundle\Form\PageMetaType;
 
 /**
@@ -17,6 +16,16 @@ use Bpeh\NestablePageBundle\Form\PageMetaType;
  */
 class PageMetaController extends Controller
 {
+
+    private $entity;
+
+    private $pagemeta_type;
+
+    public function __construct()
+    {
+        $this->entity = $this->container->getParameter('bpeh_nestable_page.pagemeta_entity');
+        $this->pagemeta_type = $this->container->getParameter('bpeh_nestable_page.pagemeta_type');
+    }
 
     /**
      * Lists all PageMeta entities.
@@ -29,7 +38,7 @@ class PageMetaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BpehNestablePageBundle:PageMeta')->findByPage($id);
+        $entities = $em->getRepository($this->entity)->findByPage($id);
 
         return array(
             'entities' => $entities,
@@ -45,7 +54,8 @@ class PageMetaController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new PageMeta();
+
+        $entity = new $this->entity();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -70,9 +80,9 @@ class PageMetaController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(PageMeta $entity)
+    private function createCreateForm($entity)
     {
-        $form = $this->createForm(new PageMetaType(), $entity, array(
+        $form = $this->createForm(new $this->pagemeta_type(), $entity, array(
             'action' => $this->generateUrl('bpeh_pagemeta_create'),
             'method' => 'POST',
         ));
@@ -91,7 +101,8 @@ class PageMetaController extends Controller
      */
     public function newAction()
     {
-        $entity = new PageMeta();
+
+        $entity = new $this->entity();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -111,7 +122,7 @@ class PageMetaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BpehNestablePageBundle:PageMeta')->find($id);
+        $entity = $em->getRepository($this->entity)->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find PageMeta entity.');
@@ -136,7 +147,7 @@ class PageMetaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BpehNestablePageBundle:PageMeta')->find($id);
+        $entity = $em->getRepository($this->entity)->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find PageMeta entity.');
@@ -159,9 +170,9 @@ class PageMetaController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(PageMeta $entity)
+    private function createEditForm($entity)
     {
-        $form = $this->createForm(new PageMetaType(), $entity, array(
+        $form = $this->createForm(new $this->pagemeta_type(), $entity, array(
             'action' => $this->generateUrl('bpeh_pagemeta_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -181,7 +192,7 @@ class PageMetaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BpehNestablePageBundle:PageMeta')->find($id);
+        $entity = $em->getRepository($this->entity)->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find PageMeta entity.');
@@ -216,7 +227,7 @@ class PageMetaController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('BpehNestablePageBundle:PageMeta')->find($id);
+            $entity = $em->getRepository($this->entity)->find($id);
             $pageId = $entity->getPage()->getId();
 
             if (!$entity) {

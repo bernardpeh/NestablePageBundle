@@ -1,6 +1,6 @@
 <?php
 
-namespace Bpeh\NestablePageBundle\DependencyInjection;
+namespace Bpeh\NestablePageBundle\PageTestBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class BpehNestablePageExtension extends Extension
+class MyTestPageExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -21,11 +21,6 @@ class BpehNestablePageExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-
-        $container->setParameter( 'bpeh_nestable_page.page_entity', $config[ 'page_entity' ]);
-        $container->setParameter( 'bpeh_nestable_page.pagemeta_entity', $config[ 'pagemeta_entity' ]);
-        $container->setParameter( 'bpeh_nestable_page.page_type', $config[ 'page_type' ]);
-        $container->setParameter( 'bpeh_nestable_page.pagemeta_type', $config[ 'pagemeta_type' ]);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
