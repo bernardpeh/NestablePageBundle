@@ -1,6 +1,6 @@
 This is a Symfony bundle based on [nestablejs](https://github.com/BeFiveINFO/Nestable) 
 
-The purpose of this bundle is to demonstrate the creation of a reusable bundle as described in [sharing your bundle](http://practicalsymfony.com/chapter-18-sharing-your-bundle)
+The purpose of this bundle is to demonstrate the creation of a reusable bundle as described in [Making your bundle reusable](http://practicalsymfony.com/chapter-18-making-your-bundle-reusable/)
 
 The techniques used in creating this bundle simply highlight the possibilities and things to consider when creating a extensible bundle. It does not mean it is the best practice. Note that I used the default crud and doctrine generator to create this bundle. 
 
@@ -84,3 +84,10 @@ In symfony root installation
 phpunit -c app bpeh/nestable-page-bundle/PageTestBundle
 ```
 
+## Contributing
+
+If you have found a bug, feel free to create a pull request. 
+
+## Copyright and License
+
+MIT License
