@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Bpeh\NestablePageBundle\Form\PageMetaType;
+use Bpeh\NestablePageBundle\Entity\PageMeta;
 
 /**
  * PageMeta controller.
@@ -21,7 +22,7 @@ class PageMetaController extends Controller
 
     private $pagemeta_type;
 
-    public function __construct()
+    public function init()
     {
         $this->entity = $this->container->getParameter('bpeh_nestable_page.pagemeta_entity');
         $this->pagemeta_type = $this->container->getParameter('bpeh_nestable_page.pagemeta_type');
@@ -48,7 +49,7 @@ class PageMetaController extends Controller
     /**
      * Creates a new PageMeta entity.
      *
-     * @Route("/", name="bpeh_pagemeta_create")
+     * @Route("/pagemeta", name="bpeh_pagemeta_create")
      * @Method("POST")
      * @Template("BpehNestablePageBundle:PageMeta:new.html.twig")
      */
@@ -80,7 +81,7 @@ class PageMetaController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm($entity)
+    private function createCreateForm(PageMeta $entity)
     {
         $form = $this->createForm(new $this->pagemeta_type(), $entity, array(
             'action' => $this->generateUrl('bpeh_pagemeta_create'),
@@ -95,7 +96,7 @@ class PageMetaController extends Controller
     /**
      * Displays a form to create a new PageMeta entity.
      *
-     * @Route("/new", name="bpeh_pagemeta_new")
+     * @Route("/pagemeta/new", name="bpeh_pagemeta_new")
      * @Method("GET")
      * @Template()
      */
@@ -114,7 +115,7 @@ class PageMetaController extends Controller
     /**
      * Finds and displays a PageMeta entity.
      *
-     * @Route("/{id}", name="bpeh_pagemeta_show")
+     * @Route("/pagemeta/{id}", name="bpeh_pagemeta_show")
      * @Method("GET")
      * @Template()
      */
@@ -139,7 +140,7 @@ class PageMetaController extends Controller
     /**
      * Displays a form to edit an existing PageMeta entity.
      *
-     * @Route("/{id}/edit", name="bpeh_pagemeta_edit")
+     * @Route("/pagemeta/{id}/edit", name="bpeh_pagemeta_edit")
      * @Method("GET")
      * @Template()
      */
@@ -170,7 +171,7 @@ class PageMetaController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm($entity)
+    private function createEditForm(PageMeta $entity)
     {
         $form = $this->createForm(new $this->pagemeta_type(), $entity, array(
             'action' => $this->generateUrl('bpeh_pagemeta_update', array('id' => $entity->getId())),
@@ -184,7 +185,7 @@ class PageMetaController extends Controller
     /**
      * Edits an existing PageMeta entity.
      *
-     * @Route("/{id}", name="bpeh_pagemeta_update")
+     * @Route("/pagemeta/{id}", name="bpeh_pagemeta_update")
      * @Method("PUT")
      * @Template("BpehNestablePageBundle:PageMeta:edit.html.twig")
      */
@@ -217,7 +218,7 @@ class PageMetaController extends Controller
     /**
      * Deletes a PageMeta entity.
      *
-     * @Route("/{id}", name="bpeh_pagemeta_delete")
+     * @Route("/pagemeta/{id}", name="bpeh_pagemeta_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)

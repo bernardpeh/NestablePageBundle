@@ -2,11 +2,11 @@
 
 namespace Bpeh\NestablePageBundle\PageTestBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Bpeh\NestablePageBundle\Form\PageMetaType as BasePageType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PageType extends AbstractType
+class PageType extends BasePageType
 {
 
     /**
@@ -17,6 +17,7 @@ class PageType extends AbstractType
     {
         $builder
             ->add('slug')
+            ->add('test_hidden')
             ->add('isPublished')
             ->add('sequence')
             ->add('parent')
@@ -29,7 +30,7 @@ class PageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Bpeh\NestablePageBundle\PageTestBundle\Entity\PageMeta'
+            'data_class' => 'Bpeh\NestablePageBundle\PageTestBundle\Entity\Page'
         ));
     }
 

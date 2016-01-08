@@ -38,7 +38,7 @@ class PageControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/bpeh_page/list');
+        $crawler = $client->request('GET', '/pagetest/list');
         // i should see why_songbird text
         $this->assertContains(
             'why_songbird',
@@ -60,7 +60,7 @@ class PageControllerTest extends WebTestCase
     {
         $client = static::createClient();
         // go to main listing page
-        $crawler = $client->request('GET', '/bpeh_page/list');
+        $crawler = $client->request('GET', '/pagetest/list');
         // click on contact_us link
         $crawler = $client->click($crawler->selectLink('contact_us')->link());
 
@@ -88,7 +88,7 @@ class PageControllerTest extends WebTestCase
         // home is dragged under about and in the second position
         $crawler = $client->request(
             'POST',
-            '/bpeh_page/reorder',
+            '/pagetest/reorder',
             array(
                'id' => 1,
                'parentId' => 2,
@@ -105,7 +105,7 @@ class PageControllerTest extends WebTestCase
         );
 
         // go back to page list again
-        $crawler = $client->request('GET', '/bpeh_page/list');
+        $crawler = $client->request('GET', '/pagetest/list');
         // there should be 2 parent menus
         $nodes = $crawler->filterXPath('//div[@id="nestable"]/ol');
         $this->assertEquals(count($nodes->children()), 2);
@@ -121,16 +121,16 @@ class PageControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/bpeh_page/1/edit');
+        $crawler = $client->request('GET', '/pagetest/1/edit');
 
         $form = $crawler->selectButton('Update')->form(array(
-            'bpeh_nestablepagebundle_page[slug]'  => 'home1',
+            'bpeh_nestablepagebundle_pagetestbundle_page[slug]'  => 'home1',
         ));
 
         $client->submit($form);
 
         // go back to the list again and i should see the slug updated
-        $crawler = $client->request('GET', '/bpeh_page/list');
+        $crawler = $client->request('GET', '/pagetest/list');
         $this->assertContains(
             'home1',
             $client->getResponse()->getContent()
@@ -144,19 +144,19 @@ class PageControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/bpeh_page/new');
+        $crawler = $client->request('GET', '/pagetest/new');
 
         $form = $crawler->selectButton('Create')->form(array(
-            'bpeh_nestablepagebundle_page[slug]'  => 'test_page',
-            'bpeh_nestablepagebundle_page[isPublished]'  => true,
-            'bpeh_nestablepagebundle_page[sequence]'  => 1,
-            'bpeh_nestablepagebundle_page[parent]'  => 2,
+            'bpeh_nestablepagebundle_pagetestbundle_page[slug]'  => 'test_page',
+            'bpeh_nestablepagebundle_pagetestbundle_page[isPublished]'  => true,
+            'bpeh_nestablepagebundle_pagetestbundle_page[sequence]'  => 1,
+            'bpeh_nestablepagebundle_pagetestbundle_page[parent]'  => 2,
         ));
 
         $client->submit($form);
 
         // go back to the list again and i should see the slug updated
-        $crawler = $client->request('GET', '/bpeh_page/list');
+        $crawler = $client->request('GET', '/pagetest/list');
         $this->assertContains(
             'test_page',
             $client->getResponse()->getContent()
@@ -169,11 +169,11 @@ class PageControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
         // at create new pagemeta page. new test_page is id 6
         $form = $crawler->selectButton('Create')->form(array(
-            'bpeh_nestablepagebundle_pagemeta[page_title]'  => 'test page title',
-            'bpeh_nestablepagebundle_pagemeta[menu_title]'  => 'test menu title',
-            'bpeh_nestablepagebundle_pagemeta[short_description]'  => 'short content',
-            'bpeh_nestablepagebundle_pagemeta[content]'  => 'long content',
-            'bpeh_nestablepagebundle_pagemeta[page]'  => 6,
+            'bpeh_nestablepagebundle_pagetestbundle_pagemeta[page_title]'  => 'test page title',
+            'bpeh_nestablepagebundle_pagetestbundle_pagemeta[menu_title]'  => 'test menu title',
+            'bpeh_nestablepagebundle_pagetestbundle_pagemeta[short_description]'  => 'short content',
+            'bpeh_nestablepagebundle_pagetestbundle_pagemeta[content]'  => 'long content',
+            'bpeh_nestablepagebundle_pagetestbundle_pagemeta[page]'  => 6,
         ));
 
         $crawler = $client->submit($form);
@@ -191,7 +191,7 @@ class PageControllerTest extends WebTestCase
         $crawler = $client->submit($form);
 
         // go back to the pagemeta list again and i should NOT see the test_page anymore
-        $crawler = $client->request('GET', '/bpeh_pagemeta/page/6');
+        $crawler = $client->request('GET', '/pagetest/page/6');
 
         $this->assertNotContains(
             'test page title',
@@ -206,7 +206,7 @@ class PageControllerTest extends WebTestCase
     {
         $client = static::createClient();
         // now if we remove contact_us page, ie id 5, all its page meta should be deleted
-        $crawler = $client->request('GET', '/bpeh_page/5');
+        $crawler = $client->request('GET', '/pagetest/5');
         $form = $crawler->selectButton('Delete')->form();
         $crawler = $client->submit($form);
         $crawler = $client->followRedirect();
@@ -217,7 +217,7 @@ class PageControllerTest extends WebTestCase
         );
 
         // we now connect to do and make sure the related pagemetas are no longer in the pagemeta table.
-        $res = $client->getContainer()->get('doctrine')->getRepository('BpehNestablePageBundle:PageMeta')->findByPage(5);
+        $res = $client->getContainer()->get('doctrine')->getRepository('Bpeh\NestablePageBundle\PageTestBundle\Entity\PageMeta')->findByPage(5);
         $this->assertEquals(0, count($res));
     } 
 }

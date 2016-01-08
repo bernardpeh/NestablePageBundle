@@ -2,11 +2,11 @@
 
 namespace Bpeh\NestablePageBundle\PageTestBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Bpeh\NestablePageBundle\Form\PageMetaType as BasePageMetaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PageMetaType extends AbstractType
+class PageMetaType extends BasePageMetaType
 {
 
     /**

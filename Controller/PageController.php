@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Bpeh\NestablePageBundle\Entity\Page;
 
 /**
  * Page controller.
@@ -21,7 +22,7 @@ class PageController extends Controller
 
     private $page_type;
 
-    public function __construct()
+    public function init()
     {
         $this->entity = $this->container->getParameter('bpeh_nestable_page.page_entity');
         $this->page_type = $this->container->getParameter('bpeh_nestable_page.page_type');
@@ -207,7 +208,7 @@ class PageController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm($entity)
+    private function createEditForm(Page $entity)
     {
         $form = $this->createForm(new $this->page_type(), $entity, array(
             'action' => $this->generateUrl('bpeh_page_update', array('id' => $entity->getId())),

@@ -1,5 +1,5 @@
 {
-    "name": "bernardpeh/nestable-page-bundle",
+    "name": "bpeh/nestable-page-bundle",
     "description": "Demo NestableJs Bundle",
     "type": "symfony-bundle",
     "require": {
