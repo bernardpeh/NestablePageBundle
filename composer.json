@@ -1,6 +1,6 @@
 {
     "name": "bpeh/nestable-page-bundle",
-    "description": "Demo NestableJs Bundle",
+    "description": "Simple NestableJs Bundle",
     "type": "symfony-bundle",
     "require": {
         "symfony/symfony": "~2.3"

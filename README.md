@@ -1,8 +1,8 @@
-A Symfony bundle based on [nestablejs](https://github.com/BeFiveINFO/Nestable) 
+This is a Symfony bundle based on [nestablejs](https://github.com/BeFiveINFO/Nestable) 
 
-This is a demo reusable bundle as described in [sharing your bundle](http://practicalsymfony.com/chapter-18-sharing-your-bundle)
+The purpose of this bundle is to demonstrate the creation of a reusable bundle as described in [sharing your bundle](http://practicalsymfony.com/chapter-18-sharing-your-bundle)
 
-The techniques used in creating this bundle simply highlight the possibilities and things to consider when creating a reusable bundle. It does not mean it is the best practice. Note that I used the default crud and doctrine generator to create this bundle. 
+The techniques used in creating this bundle simply highlight the possibilities and things to consider when creating a extensible bundle. It does not mean it is the best practice. Note that I used the default crud and doctrine generator to create this bundle. 
 
 The best way to get started is to install the demo bundle. The demo bundle (PageTestBundle) extends NestablePageBundle and has the controllers, entities and formtypes configured. Hack it to your liking!
 
@@ -49,7 +49,7 @@ doctrine:
             Bpeh\NestablePageBundle\Model\PageBase: Bpeh\NestablePageBundle\PageTestBundle\Entity\Page
             Bpeh\NestablePageBundle\Model\PageMetaBase: Bpeh\NestablePageBundle\PageTestBundle\Entity\PageMeta
 
-# Leave default for demo. override this part to use your own entities and formtype
+# Leave default for demo. override this part to use your own entities and formtypes
 
 # bpeh_nestable_page:
 #     page_entity: YourBundle\Entity\Page
@@ -76,7 +76,7 @@ To test if everything is working, go to
 http://yoururl/pagetest
 ```
 
-## Functional Testing on Demo
+## Functional Testing on Demo Bundle
 
 In symfony root installation
 
