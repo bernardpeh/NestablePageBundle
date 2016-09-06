@@ -1,0 +1,6 @@
+services:
+
+  bpeh_nestable_page.init:
+    class: Bpeh\NestablePageBundle\EventListener\ControllerListener
+    tags:
+      - { name: kernel.event_listener, event: kernel.controller, method: onKernelController}

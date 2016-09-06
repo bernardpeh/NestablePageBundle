@@ -122,7 +122,7 @@ class PageController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$pageMeta = $em->getRepository('BpehNestablePageBundle:PageMeta')->findPageMetaByLocale($id,$request->getLocale());
+		$pageMeta = $em->getRepository('BpehNestablePageBundle:PageMeta')->findPageMetaByLocale($page,$request->getLocale());
 
 		$deleteForm = $this->createDeleteForm($page);
 
