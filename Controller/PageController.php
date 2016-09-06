@@ -128,7 +128,7 @@ class PageController extends Controller
 
 		return array(
 			'page' => $page,
-			// 'pageMeta' => $pageMeta,
+			'pageMeta' => $pageMeta,
 			'delete_form' => $deleteForm->createView(),
 		);
 	}
