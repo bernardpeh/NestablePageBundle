@@ -1,57 +1,48 @@
-{% extends '::base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block body -%}
+{% block body %}
     <h1>PageMeta</h1>
 
-    <table class="record_properties">
+    <table>
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Page Slug</th>
-                <td>{{ entity.page }}</td>
+                <td>{{ pageMetum.id }}</td>
             </tr>
             <tr>
                 <th>Page_title</th>
-                <td>{{ entity.pagetitle }}</td>
+                <td>{{ pageMetum.pagetitle }}</td>
             </tr>
             <tr>
                 <th>Menu_title</th>
-                <td>{{ entity.menutitle }}</td>
+                <td>{{ pageMetum.menutitle }}</td>
             </tr>
             <tr>
                 <th>Locale</th>
-                <td>{{ entity.locale }}</td>
+                <td>{{ pageMetum.locale }}</td>
             </tr>
             <tr>
                 <th>Short_description</th>
-                <td>{{ entity.shortdescription }}</td>
+                <td>{{ pageMetum.shortdescription }}</td>
             </tr>
             <tr>
                 <th>Content</th>
-                <td>{{ entity.content }}</td>
+                <td>{{ pageMetum.content }}</td>
             </tr>
         </tbody>
     </table>
 
-    <ul class="record_actions">
-    <li>
-        <a href="{{ path('bpeh_page_show', {'id': entity.page.getId()} ) }}">
-            View Page
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('bpeh_pagemeta', {'id': entity.page.getId()}) }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('bpeh_pagemeta_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <ul>
+        <li>
+            <a href="{{ path('bpeh_pagemeta_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('bpeh_pagemeta_edit', { 'id': pageMetum.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
 {% endblock %}

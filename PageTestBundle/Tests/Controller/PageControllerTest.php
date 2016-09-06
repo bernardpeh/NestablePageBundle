@@ -8,216 +8,223 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 
 class PageControllerTest extends WebTestCase
 {
-    
-    protected static $application;
 
-    protected function setUp()
-    {      
-        self::getApplication()->run(new StringInput('doctrine:database:drop --force'));
-        self::getApplication()->run(new StringInput('doctrine:database:create'));
-        self::getApplication()->run(new StringInput('doctrine:schema:create'));
-        self::getApplication()->run(new StringInput('doctrine:fixtures:load -n'));
-    }
+	protected static $application;
 
-    protected static function getApplication()
-    {
-        if (null === self::$application) {
-            $client = static::createClient();
+	protected function setUp()
+	{
+		self::getApplication()->run(new StringInput('doctrine:database:drop --force'));
+		self::getApplication()->run(new StringInput('doctrine:database:create'));
+		self::getApplication()->run(new StringInput('doctrine:schema:create'));
+		self::getApplication()->run(new StringInput('doctrine:fixtures:load -n'));
+	}
 
-            self::$application = new Application($client->getKernel());
-            self::$application->setAutoExit(false);
-        }
+	protected static function getApplication()
+	{
+		if (null === self::$application) {
+			$client = static::createClient();
 
-        return self::$application;
-    }
+			self::$application = new Application($client->getKernel());
+			self::$application->setAutoExit(false);
+		}
 
-    /**
-     * scenario 1.11
-     */
-    public function testListPages()
-    {
-        $client = static::createClient();
+		return self::$application;
+	}
 
-        $crawler = $client->request('GET', '/pagetest/list');
-        // i should see why_songbird text
-        $this->assertContains(
-            'why_songbird',
-            $client->getResponse()->getContent()
-        );
-        // there should be 3 parent menus
-        $nodes = $crawler->filterXPath('//div[@id="nestable"]/ol');
-        $this->assertEquals(count($nodes->children()), 3);
+	/**
+	 * scenario 1.11
+	 *
+	 * Test list action
+	 */
+	public function testListPages()
+	{
+		$client = static::createClient();
 
-        // there should be 2 entries under the about menu
-        $nodes = $crawler->filterXPath('//li[@data-id="2"]/ol');
-        $this->assertEquals(count($nodes->children()), 2);
-    }
+		$crawler = $client->request('GET', '/pagetest/list');
+		// i should see why_songbird text
+		$this->assertContains(
+			'why_songbird',
+			$client->getResponse()->getContent()
+		);
+		// there should be 3 parent menus
+		$nodes = $crawler->filterXPath('//div[@id="nestable"]/ol');
+		$this->assertEquals(count($nodes->children()), 3);
 
-    /**
-     * scenario 1.12
-     */
-    public function testShowContactUsPage()
-    {
-        $client = static::createClient();
-        // go to main listing page
-        $crawler = $client->request('GET', '/pagetest/list');
-        // click on contact_us link
-        $crawler = $client->click($crawler->selectLink('contact_us')->link());
+		// there should be 2 entries under the about menu
+		$nodes = $crawler->filterXPath('//li[@data-id="2"]/ol');
+		$this->assertEquals(count($nodes->children()), 2);
+	}
 
-        // i should see "contact_us"
-        $this->assertContains(
-            'contact_us',
-            $client->getResponse()->getContent()
-        );
+	/**
+	 * scenario 1.12
+	 *
+	 * Test show action
+	 */
+	public function testShowContactUsPage()
+	{
+		$client = static::createClient();
+		// go to main listing page
+		$crawler = $client->request('GET', '/pagetest/list');
+		// click on contact_us link
+		$crawler = $client->click($crawler->selectLink('contact_us')->link());
 
-        // i should see "Created"
-        $this->assertContains(
-            'Created',
-            $client->getResponse()->getContent()
-        );
-    } 
+		// i should see "contact_us"
+		$this->assertContains(
+			'contact_us',
+			$client->getResponse()->getContent()
+		);
 
-    /**
-     * scenario 1.13
-     * We simulate ajax submission
-     */
-    public function testReorderHomePage()
-    {
-        $client = static::createClient();
+		// i should see "Created"
+		$this->assertContains(
+			'Created',
+			$client->getResponse()->getContent()
+		);
+	}
 
-        // home is dragged under about and in the second position
-        $crawler = $client->request(
-            'POST',
-            '/pagetest/reorder',
-            array(
-               'id' => 1,
-               'parentId' => 2,
-               'position' => 1
-            ),
-            array(),
-            array('HTTP_X-Requested-With' => 'XMLHttpRequest') 
-        );
+	/**
+	 * scenario 1.13
+	 *
+	 * We simulate ajax submission by reordering menu
+	 */
+	public function testReorderHomePage()
+	{
+		$client = static::createClient();
 
-        // i should get a success message in the returned content
-        $this->assertContains(
-            'menu has been reordered successfully',
-            $client->getResponse()->getContent()
-        );
+		// home is dragged under about and in the second position
+		$crawler = $client->request(
+			'POST',
+			'/songbird_page/reorder',
+			array(
+				'id' => 1,
+				'parentId' => 2,
+				'position' => 1
+			),
+			array(),
+			array('HTTP_X-Requested-With' => 'XMLHttpRequest')
+		);
 
-        // go back to page list again
-        $crawler = $client->request('GET', '/pagetest/list');
-        // there should be 2 parent menus
-        $nodes = $crawler->filterXPath('//div[@id="nestable"]/ol');
-        $this->assertEquals(count($nodes->children()), 2);
-        // there should 3 items under the about menu
-        $nodes = $crawler->filterXPath('//li[@data-id="2"]/ol');
-        $this->assertEquals(count($nodes->children()), 3);
-    } 
-    
-    /**
-     * scenario 1.14
-     */
-    public function testEditHomePage()
-    {
-        $client = static::createClient();
+		// i should get a success message in the returned content
+		$this->assertContains(
+			'menu has been reordered successfully',
+			$client->getResponse()->getContent()
+		);
 
-        $crawler = $client->request('GET', '/pagetest/1/edit');
+		// go back to page list again
+		$crawler = $client->request('GET', '/pagetest/list');
+		// there should be 2 parent menus
+		$nodes = $crawler->filterXPath('//div[@id="nestable"]/ol');
+		$this->assertEquals(count($nodes->children()), 2);
+		// there should 3 items under the about menu
+		$nodes = $crawler->filterXPath('//li[@data-id="2"]/ol');
+		$this->assertEquals(count($nodes->children()), 3);
+	}
 
-        $form = $crawler->selectButton('Update')->form(array(
-            'bpeh_nestablepagebundle_pagetestbundle_page[slug]'  => 'home1',
-        ));
+	/**
+	 * scenario 1.14
+	 *
+	 * Test edit action
+	 */
+	public function testEditHomePage()
+	{
+		$client = static::createClient();
 
-        $client->submit($form);
+		$crawler = $client->request('GET', '/pagetest/1/edit');
 
-        // go back to the list again and i should see the slug updated
-        $crawler = $client->request('GET', '/pagetest/list');
-        $this->assertContains(
-            'home1',
-            $client->getResponse()->getContent()
-        );
-    } 
+		$form = $crawler->selectButton('Edit')->form(array(
+			'page[slug]'  => 'home1',
+		));
 
-    /**
-     * scenario 1.15
-     */
-    public function testCreateDeleteTestPageMeta()
-    {
-        $client = static::createClient();
+		$client->submit($form);
 
-        $crawler = $client->request('GET', '/pagetest/new');
+		// go back to the list again and i should see the slug updated
+		$crawler = $client->request('GET', '/pagetest/list');
+		$this->assertContains(
+			'home1',
+			$client->getResponse()->getContent()
+		);
+	}
 
-        $form = $crawler->selectButton('Create')->form(array(
-            'bpeh_nestablepagebundle_pagetestbundle_page[slug]'  => 'test_page',
-            'bpeh_nestablepagebundle_pagetestbundle_page[isPublished]'  => true,
-            'bpeh_nestablepagebundle_pagetestbundle_page[sequence]'  => 1,
-            'bpeh_nestablepagebundle_pagetestbundle_page[parent]'  => 2,
-        ));
+	/**
+	 * scenario 1.15
+	 *
+	 * Test new and delete action
+	 */
+	public function testCreateDeleteTestPage()
+	{
+		$client = static::createClient();
 
-        $client->submit($form);
+		$crawler = $client->request('GET', '/pagetest/new');
 
-        // go back to the list again and i should see the slug updated
-        $crawler = $client->request('GET', '/pagetest/list');
-        $this->assertContains(
-            'test_page',
-            $client->getResponse()->getContent()
-        );
-        // click on test page link
-        $crawler = $client->click($crawler->selectLink('test_page')->link());
-        // at show pagemeta
-        $crawler = $client->click($crawler->selectLink('View PageMeta')->link());
-        // at view pagemeta list
-        $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
-        // at create new pagemeta page. new test_page is id 6
-        $form = $crawler->selectButton('Create')->form(array(
-            'bpeh_nestablepagebundle_pagetestbundle_pagemeta[page_title]'  => 'test page title',
-            'bpeh_nestablepagebundle_pagetestbundle_pagemeta[menu_title]'  => 'test menu title',
-            'bpeh_nestablepagebundle_pagetestbundle_pagemeta[short_description]'  => 'short content',
-            'bpeh_nestablepagebundle_pagetestbundle_pagemeta[content]'  => 'long content',
-            'bpeh_nestablepagebundle_pagetestbundle_pagemeta[page]'  => 6,
-        ));
+		$form = $crawler->selectButton('Create')->form(array(
+			'page[slug]'  => 'test_page',
+			'page[isPublished]'  => true,
+			'page[sequence]'  => 1,
+			'page[parent]'  => 2,
+		));
 
-        $crawler = $client->submit($form);
+		$client->submit($form);
 
-        // follow redirect to show pagemeta
-        $crawler = $client->followRedirect();
+		// go back to the list again and i should see the slug updated
+		$crawler = $client->request('GET', '/songbird_page/list');
+		$this->assertContains(
+			'test_page',
+			$client->getResponse()->getContent()
+		);
 
-        $this->assertContains(
-            'short content',
-            $client->getResponse()->getContent()
-        );
+		$crawler = $client->click($crawler->selectLink('Create New PageMeta')->link());
+		// at create new pagemeta page. new test_page is id 6
+		$form = $crawler->selectButton('Create')->form(array(
+			'page_meta[page_title]'  => 'test page title',
+			'page_meta[menu_title]'  => 'test menu title',
+			'page_meta[short_description]'  => 'short content',
+			'page_meta[content]'  => 'long content',
+			'page_meta[page]'  => 6,
+		));
 
-        // at show pagemeta, click delete
-        $form = $crawler->selectButton('Delete')->form();
-        $crawler = $client->submit($form);
+		$crawler = $client->submit($form);
 
-        // go back to the pagemeta list again and i should NOT see the test_page anymore
-        $crawler = $client->request('GET', '/pagetest/page/6');
+		// follow redirect to show pagemeta
+		$crawler = $client->followRedirect();
 
-        $this->assertNotContains(
-            'test page title',
-            $client->getResponse()->getContent()
-        );
-    } 
-    
-    /**
-     * scenario 1.16
-     */
-    public function testDeleteContactUsPage()
-    {
-        $client = static::createClient();
-        // now if we remove contact_us page, ie id 5, all its page meta should be deleted
-        $crawler = $client->request('GET', '/pagetest/5');
-        $form = $crawler->selectButton('Delete')->form();
-        $crawler = $client->submit($form);
-        $crawler = $client->followRedirect();
-        
-        $this->assertNotContains(
-            'contact_us',
-            $client->getResponse()->getContent()
-        );
+		$this->assertContains(
+			'short content',
+			$client->getResponse()->getContent()
+		);
 
-        // we now connect to do and make sure the related pagemetas are no longer in the pagemeta table.
-        $res = $client->getContainer()->get('doctrine')->getRepository('Bpeh\NestablePageBundle\PageTestBundle\Entity\PageMeta')->findByPage(5);
-        $this->assertEquals(0, count($res));
-    } 
+		// at show pagemeta, click delete
+		$form = $crawler->selectButton('Delete')->form();
+		$crawler = $client->submit($form);
+
+		// go back to the pagemeta list again and i should NOT see the test_page anymore
+		$crawler = $client->request('GET', '/pagetest_pagemeta');
+
+		$this->assertNotContains(
+			'test page title',
+			$client->getResponse()->getContent()
+		);
+	}
+
+	/**
+	 * scenario 17.16
+	 */
+	public function testDeleteContactUsPage()
+	{
+		$client = static::createClient();
+		// now if we remove contact_us page, ie id 5, all its page meta should be deleted
+		$crawler = $client->request('GET', '/pagetest/5');
+		$form = $crawler->selectButton('Delete')->form();
+		$crawler = $client->submit($form);
+		$crawler = $client->followRedirect();
+
+		$this->assertNotContains(
+			'contact_us',
+			$client->getResponse()->getContent()
+		);
+
+		// we now connect to do and make sure the related pagemetas are no longer in the pagemeta table.
+		$res = $client->getContainer()->get('doctrine')->getRepository('SongbirdNestablePageBundle:PageMeta')->findByPage(5);
+		$this->assertEquals(0, count($res));
+	}
 }
+
+

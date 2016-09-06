@@ -1,9 +1,9 @@
-{% extends '::base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block body -%}
+{% block body %}
     <h1>PageMeta list</h1>
 
-    <table class="records_list">
+    <table>
         <thead>
             <tr>
                 <th>Id</th>
@@ -16,39 +16,32 @@
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
+        {% for pageMetum in pageMetas %}
             <tr>
-                <td><a href="{{ path('bpeh_pagemeta_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.pagetitle }}</td>
-                <td>{{ entity.menutitle }}</td>
-                <td>{{ entity.locale }}</td>
-                <td>{{ entity.shortdescription }}</td>
-                <td>{{ entity.content }}</td>
+                <td><a href="{{ path('bpeh_pagemeta_show', { 'id': pageMetum.id }) }}">{{ pageMetum.id }}</a></td>
+                <td>{{ pageMetum.pagetitle }}</td>
+                <td>{{ pageMetum.menutitle }}</td>
+                <td>{{ pageMetum.locale }}</td>
+                <td>{{ pageMetum.shortdescription }}</td>
+                <td>{{ pageMetum.content }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('bpeh_pagemeta_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('bpeh_pagemeta_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    <ul>
+                        <li>
+                            <a href="{{ path('bpeh_pagemeta_show', { 'id': pageMetum.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('bpeh_pagemeta_edit', { 'id': pageMetum.id }) }}">edit</a>
+                        </li>
+                    </ul>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-        <ul>
+    <ul>
         <li>
-            <a href="{{ path('bpeh_page_show', {'id': pageId} ) }}">
-                View Page
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('bpeh_pagemeta_new') }}">
-                Create a new entry
-            </a>
+            <a href="{{ path('bpeh_pagemeta_new') }}">Create a new entry</a>
         </li>
     </ul>
-    {% endblock %}
+{% endblock %}
