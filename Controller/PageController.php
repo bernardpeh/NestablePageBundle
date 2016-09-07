@@ -2,13 +2,13 @@
 
 namespace Bpeh\NestablePageBundle\Controller;
 
+use Bpeh\NestablePageBundle\Entity\Page;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Bpeh\NestablePageBundle\Entity\Page;
 
 /**
  * Page controller.
@@ -20,33 +20,43 @@ class PageController extends Controller
 
     private $entity;
 
-    private $page_type;
+	private $entity_meta;
+
+    private $page_form_type;
+
+	private $page_meta_form_type;
 
     public function init()
     {
     	$this->entity = $this->container->getParameter('bpeh_nestable_page.page_entity');
-        $this->page_type = $this->container->getParameter('bpeh_nestable_page.page_type');
+	    $this->entity_meta = $this->container->getParameter('bpeh_nestable_page.pagemeta_entity');
+        $this->page_form_type = $this->container->getParameter('bpeh_nestable_page.page_form_type');
+	    $this->page_meta_form_type = $this->container->getParameter('bpeh_nestable_page.pagemeta_form_type');
     }
-    
-    /**
-     * Lists all Page entities.
-     *
-     * @Route("/", name="bpeh_page")
-     * @Method("GET")
-     * @Template()
-     */
+
+	/**
+	 * Lists all Page entities.
+	 *
+	 * @Route("/", name="bpeh_page")
+	 * @Method("GET")
+	 * @Template()
+	 *
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
+	 */
     public function indexAction()
     {
 	    return $this->redirect($this->generateUrl('bpeh_page_list'));
     }
 
 	/**
-     * Lists all nested page
-     *
-     * @Route("/list", name="bpeh_page_list")
-     * @Method("GET")
-     * @Template()
-     */
+	 * Lists all nested page
+	 *
+	 * @Route("/list", name="bpeh_page_list")
+	 * @Method("GET")
+	 * @Template()
+	 *
+	 * @return array
+	 */
     public function listAction()
     {
     	$em = $this->getDoctrine()->getManager();
@@ -57,13 +67,17 @@ class PageController extends Controller
         );
     }
 
-    /**
-     * reorder pages
-     *
-     * @Route("/reorder", name="bpeh_page_reorder")
-     * @Method("POST")
-     * @Template()
-     */
+	/**
+	 * reorder pages
+	 *
+	 * @Route("/reorder", name="bpeh_page_reorder")
+	 * @Method("POST")
+	 * @Template()
+	 *
+	 * @param Request $request
+	 *
+	 * @return JsonResponse
+	 */
     public function reorderAction(Request $request)
     {
 	    $em = $this->getDoctrine()->getManager();
@@ -83,17 +97,21 @@ class PageController extends Controller
 
     }
 
-    /**
-     * Creates a new Page entity.
-     *
-     * @Route("/new", name="bpeh_page_new")
-     * @Method({"GET", "POST"})
-     * @Template()
-     */
+	/**
+	 * Creates a new Page entity.
+	 *
+	 * @Route("/new", name="bpeh_page_new")
+	 * @Method({"GET", "POST"})
+	 * @Template()
+	 *
+	 * @param Request $request
+	 *
+	 * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+	 */
     public function newAction(Request $request)
     {
 	    $page = new $this->entity();
-	    $form = $this->createForm('Bpeh\NestablePageBundle\Form\PageType', $page);
+	    $form = $this->createForm($this->page_form_type, $page);
 	    $form->handleRequest($request);
 
 	    if ($form->isSubmitted() && $form->isValid()) {
@@ -117,12 +135,17 @@ class PageController extends Controller
 	 * @Method("GET")
 	 * @Template()
 	 *
+	 * @param Request $request
+	 *
+	 * @return array
 	 */
-	public function showAction(Request $request, Page $page)
+	public function showAction(Request $request)
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$pageMeta = $em->getRepository('BpehNestablePageBundle:PageMeta')->findPageMetaByLocale($page,$request->getLocale());
+		$page = $em->getRepository($this->entity)->find($request->get('id'));
+
+		$pageMeta = $em->getRepository($this->entity_meta)->findPageMetaByLocale($page,$request->getLocale());
 
 		$deleteForm = $this->createDeleteForm($page);
 
@@ -139,12 +162,17 @@ class PageController extends Controller
 	 * @Route("/{id}/edit", name="bpeh_page_edit")
 	 * @Method({"GET", "POST"})
 	 * @Template()
+	 *
+	 * @param Request $request
+	 *
+	 * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
 	 */
-	public function editAction(Request $request, Page $page=null)
+	public function editAction(Request $request)
 	{
-
+		$em = $this->getDoctrine()->getManager();
+		$page = $em->getRepository($this->entity)->find($request->get('id'));
 		$deleteForm = $this->createDeleteForm($page);
-		$editForm = $this->createForm('Bpeh\NestablePageBundle\Form\PageType', $page);
+		$editForm = $this->createForm($this->page_form_type, $page);
 		$editForm->handleRequest($request);
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -162,15 +190,20 @@ class PageController extends Controller
 		);
 	}
 
-
 	/**
 	 * Deletes a Page entity.
 	 *
 	 * @Route("/{id}", name="bpeh_page_delete")
 	 * @Method("DELETE")
+	 *
+	 * @param Request $request
+	 *
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
 	 */
-	public function deleteAction(Request $request, Page $page)
+	public function deleteAction(Request $request)
 	{
+		$em = $this->getDoctrine()->getManager();
+		$page = $em->getRepository($this->entity)->find($request->get('id'));
 		$form = $this->createDeleteForm($page);
 		$form->handleRequest($request);
 
@@ -185,8 +218,6 @@ class PageController extends Controller
 
 	/**
 	 * Creates a form to delete a Page entity.
-	 *
-	 * @param Page $page The Page entity
 	 *
 	 * @return \Symfony\Component\Form\Form The form
 	 */

@@ -26,8 +26,8 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('page_entity')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Entity\Page')->end()
                 ->scalarNode('pagemeta_entity')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Entity\PageMeta')->end()
-                ->scalarNode('page_type')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Form\PageType')->end()
-                ->scalarNode('pagemeta_type')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Form\PageMetaType')->end()
+                ->scalarNode('page_form_type')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Form\PageType')->end()
+                ->scalarNode('pagemeta_form_type')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Form\PageMetaType')->end()
             ->end()
         ;
         return $treeBuilder;

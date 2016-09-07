@@ -39,12 +39,19 @@
         <li>
             <a href="{{ path('bpeh_page_edit', { 'id': page.id }) }}">Edit Page</a>
         </li>
-        <li>
-            <a href="{{ path('bpeh_pagemeta_show', { 'id': pageMeta.id }) }}">View PageMeta</a>
-        </li>
-        <li>
-            <a href="{{ path('bpeh_pagemeta_edit', { 'id': pageMeta.id }) }}">Edit PageMeta</a>
-        </li>
+        {# checks if pagemeta is defined. If no, user can add new pagemeta #}
+        {% if pageMeta.id is defined %}
+            <li>
+                <a href="{{ path('bpeh_pagemeta_show', { 'id': pageMeta.id }) }}">View PageMeta</a>
+            </li>
+            <li>
+                <a href="{{ path('bpeh_pagemeta_edit', { 'id': pageMeta.id }) }}">Edit PageMeta</a>
+            </li>
+        {%  else %}
+            <li>
+                <a href="{{ path('bpeh_pagemeta_new') }}">Add PageMeta</a>
+            </li>
+        {% endif %}
         <li>
             {{ form_start(delete_form) }}
                 <input type="submit" value="Delete">

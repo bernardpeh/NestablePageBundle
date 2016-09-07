@@ -54,8 +54,8 @@ doctrine:
 # bpeh_nestable_page:
 #     page_entity: YourBundle\Entity\Page
 #     pagemeta_entity: YourBundle\Entity\PageMeta
-#     page_type: YourBundle\PageTestBundle\Form\PageType
-#     pagemeta_type: YourBundle\PageTestBundle\Form\PageMetaType
+#     page_form_type: YourBundle\PageTestBundle\Form\PageType
+#     pagemeta_form_type: YourBundle\PageTestBundle\Form\PageMetaType
 ```
 
 In routing.yml, add the routes

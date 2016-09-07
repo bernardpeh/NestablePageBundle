@@ -17,15 +17,21 @@ use Bpeh\NestablePageBundle\Entity\PageMeta;
 class PageMetaController extends Controller
 {
 
-    private $entity;
+	private $entity;
 
-    private $pagemeta_type;
+	private $entity_meta;
 
-    public function init()
-    {
-        $this->entity = $this->container->getParameter('bpeh_nestable_page.pagemeta_entity');
-        $this->pagemeta_type = $this->container->getParameter('bpeh_nestable_page.pagemeta_type');
-    }
+	private $page_form_type;
+
+	private $page_meta_form_type;
+
+	public function init()
+	{
+		$this->entity = $this->container->getParameter('bpeh_nestable_page.page_entity');
+		$this->entity_meta = $this->container->getParameter('bpeh_nestable_page.pagemeta_entity');
+		$this->page_form_type = $this->container->getParameter('bpeh_nestable_page.page_form_type');
+		$this->page_meta_form_type = $this->container->getParameter('bpeh_nestable_page.pagemeta_form_type');
+	}
 
 	/**
 	 * Lists all PageMeta entities.
@@ -36,9 +42,10 @@ class PageMetaController extends Controller
 	 */
 	public function indexAction()
 	{
+
 		$em = $this->getDoctrine()->getManager();
 
-		$pageMetas = $em->getRepository($this->entity)->findAll();
+		$pageMetas = $em->getRepository($this->entity_meta)->findAll();
 
 		return array(
 			'pageMetas' => $pageMetas,
@@ -76,11 +83,12 @@ class PageMetaController extends Controller
 	 * Finds and displays a PageMeta entity.
 	 *
 	 * @Route("/pagemeta/{id}", name="bpeh_pagemeta_show")
-	 * @Method({"GET", "POST"})
+	 * @Method("GET")
 	 * @Template()
 	 */
 	public function showAction(PageMeta $pageMetum)
 	{
+
 		$deleteForm = $this->createDeleteForm($pageMetum);
 
 		return array(

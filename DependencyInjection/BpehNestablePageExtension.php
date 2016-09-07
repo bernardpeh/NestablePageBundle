@@ -24,8 +24,8 @@ class BpehNestablePageExtension extends Extension
 
         $container->setParameter( 'bpeh_nestable_page.page_entity', $config[ 'page_entity' ]);
         $container->setParameter( 'bpeh_nestable_page.pagemeta_entity', $config[ 'pagemeta_entity' ]);
-        $container->setParameter( 'bpeh_nestable_page.page_type', $config[ 'page_type' ]);
-        $container->setParameter( 'bpeh_nestable_page.pagemeta_type', $config[ 'pagemeta_type' ]);
+        $container->setParameter( 'bpeh_nestable_page.page_form_type', $config[ 'page_form_type' ]);
+        $container->setParameter( 'bpeh_nestable_page.pagemeta_form_type', $config[ 'pagemeta_form_type' ]);
 
 	    $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 	    $loader->load('services.yml');
