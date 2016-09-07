@@ -36,13 +36,12 @@ class PageMetaController extends Controller
 	/**
 	 * Lists all PageMeta entities.
 	 *
-	 * @Route("/pagemeta", name="bpeh_pagemeta_index")
+	 * @Route("/", name="bpeh_pagemeta_index")
 	 * @Method("GET")
 	 * @Template()
 	 */
 	public function indexAction()
 	{
-
 		$em = $this->getDoctrine()->getManager();
 
 		$pageMetas = $em->getRepository($this->entity_meta)->findAll();
@@ -55,26 +54,30 @@ class PageMetaController extends Controller
 	/**
 	 * Creates a new PageMeta entity.
 	 *
-	 * @Route("/pagemeta/new", name="bpeh_pagemeta_new")
+	 * @Route("/new", name="bpeh_pagemeta_new")
 	 * @Method({"GET", "POST"})
 	 * @Template()
 	 */
 	public function newAction(Request $request)
 	{
-		$pageMetum = new PageMeta();
-		$form = $this->createForm('Bpeh\NestablePageBundle\Form\PageMetaType', $pageMetum);
+		$pageMeta = new $this->entity_meta();
+		$form = $this->createForm($this->page_meta_form_type, $pageMeta);
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-			$em->persist($pageMetum);
-			$em->flush();
 
-			return $this->redirectToRoute('bpeh_pagemeta_show', array('id' => $pageMetum->getId()));
+			if ( $em->getRepository( $this->entity_meta )->findPageMetaByLocale( $pageMeta->getPage(), $pageMeta->getLocale() ) ) {
+				$this->get('session')->getFlashBag()->add( 'error', $this->get('translator')->trans('one_locale_per_pagemeta_only', array(), 'BpehNestablePageBundle') );
+			} else {
+				$em->persist( $pageMeta );
+				$em->flush();
+				return $this->redirectToRoute( 'bpeh_pagemeta_show', array( 'id' => $pageMeta->getId() ) );
+			}
 		}
 
 		return array(
-			'pageMetum' => $pageMetum,
+			'pageMeta' => $pageMeta,
 			'form' => $form->createView(),
 		);
 	}
@@ -82,17 +85,20 @@ class PageMetaController extends Controller
 	/**
 	 * Finds and displays a PageMeta entity.
 	 *
-	 * @Route("/pagemeta/{id}", name="bpeh_pagemeta_show")
+	 * @Route("/{id}", name="bpeh_pagemeta_show")
 	 * @Method("GET")
 	 * @Template()
 	 */
-	public function showAction(PageMeta $pageMetum)
+	public function showAction(Request $request)
 	{
+		$em = $this->getDoctrine()->getManager();
 
-		$deleteForm = $this->createDeleteForm($pageMetum);
+		$pageMeta = $em->getRepository($this->entity_meta)->find($request->get('id'));
+
+		$deleteForm = $this->createDeleteForm($pageMeta);
 
 		return array(
-			'pageMetum' => $pageMetum,
+			'pageMeta' => $pageMeta,
 			'delete_form' => $deleteForm->createView(),
 		);
 	}
@@ -100,26 +106,44 @@ class PageMetaController extends Controller
 	/**
 	 * Displays a form to edit an existing PageMeta entity.
 	 *
-	 * @Route("/pagemeta/{id}/edit", name="bpeh_pagemeta_edit")
+	 * @Route("/{id}/edit", name="bpeh_pagemeta_edit")
 	 * @Method({"GET", "POST"})
 	 * @Template()
 	 */
-	public function editAction(Request $request, PageMeta $pageMetum)
+	public function editAction(Request $request)
 	{
-		$deleteForm = $this->createDeleteForm($pageMetum);
-		$editForm = $this->createForm('Bpeh\NestablePageBundle\Form\PageMetaType', $pageMetum);
+		$em = $this->getDoctrine()->getManager();
+		$pageMeta = $em->getRepository($this->entity_meta)->find($request->get('id'));
+		$origId = $pageMeta->getPage()->getId();
+		$origLocale = $pageMeta->getLocale();
+
+		$deleteForm = $this->createDeleteForm($pageMeta);
+		$editForm = $this->createForm($this->page_meta_form_type, $pageMeta);
 		$editForm->handleRequest($request);
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($pageMetum);
-			$em->flush();
 
-			return $this->redirectToRoute('bpeh_pagemeta_edit', array('id' => $pageMetum->getId()));
+			$error = false;
+
+			// if page and local is the same, dont need to check locale count
+			if ($origLocale == $pageMeta->getLocale() && $origId == $pageMeta->getPage()->getId()) {
+				// all good
+			}
+			elseif ( $em->getRepository( $this->entity_meta )->findPageMetaByLocale( $pageMeta->getPage(), $pageMeta->getLocale(), true ) ) {
+				$this->get('session')->getFlashBag()->add( 'error', $this->get('translator')->trans('one_locale_per_pagemeta_only', array(), 'BpehNestablePageBundle') );
+				$error = true;
+			}
+
+			// if everything is successful
+			if (!$error) {
+				$em->persist( $pageMeta );
+				$em->flush();
+				return $this->redirectToRoute( 'bpeh_pagemeta_edit', array( 'id' => $pageMeta->getId() ) );
+			}
 		}
 
 		return array(
-			'pageMetum' => $pageMetum,
+			'pageMeta' => $pageMeta,
 			'edit_form' => $editForm->createView(),
 			'delete_form' => $deleteForm->createView(),
 		);
@@ -128,17 +152,19 @@ class PageMetaController extends Controller
 	/**
 	 * Deletes a PageMeta entity.
 	 *
-	 * @Route("/pagemeta/{id}", name="bpeh_pagemeta_delete")
+	 * @Route("/{id}", name="bpeh_pagemeta_delete")
 	 * @Method("DELETE")
 	 */
-	public function deleteAction(Request $request, PageMeta $pageMetum)
+	public function deleteAction(Request $request)
 	{
-		$form = $this->createDeleteForm($pageMetum);
+		$em = $this->getDoctrine()->getManager();
+		$pageMeta = $em->getRepository($this->entity_meta)->find($request->get('id'));
+		$form = $this->createDeleteForm($pageMeta);
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-			$em->remove($pageMetum);
+			$em->remove($pageMeta);
 			$em->flush();
 		}
 
@@ -152,10 +178,10 @@ class PageMetaController extends Controller
 	 *
 	 * @return \Symfony\Component\Form\Form The form
 	 */
-	private function createDeleteForm(PageMeta $pageMetum)
+	private function createDeleteForm(PageMeta $pageMeta)
 	{
 		return $this->createFormBuilder()
-		            ->setAction($this->generateUrl('bpeh_pagemeta_delete', array('id' => $pageMetum->getId())))
+		            ->setAction($this->generateUrl('bpeh_pagemeta_delete', array('id' => $pageMeta->getId())))
 		            ->setMethod('DELETE')
 		            ->getForm()
 			;

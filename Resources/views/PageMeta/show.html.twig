@@ -7,27 +7,27 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ pageMetum.id }}</td>
+                <td>{{ pageMeta.id }}</td>
             </tr>
             <tr>
                 <th>Page_title</th>
-                <td>{{ pageMetum.pagetitle }}</td>
+                <td>{{ pageMeta.pagetitle }}</td>
             </tr>
             <tr>
                 <th>Menu_title</th>
-                <td>{{ pageMetum.menutitle }}</td>
+                <td>{{ pageMeta.menutitle }}</td>
             </tr>
             <tr>
                 <th>Locale</th>
-                <td>{{ pageMetum.locale }}</td>
+                <td>{{ pageMeta.locale }}</td>
             </tr>
             <tr>
                 <th>Short_description</th>
-                <td>{{ pageMetum.shortdescription }}</td>
+                <td>{{ pageMeta.shortdescription }}</td>
             </tr>
             <tr>
                 <th>Content</th>
-                <td>{{ pageMetum.content }}</td>
+                <td>{{ pageMeta.content }}</td>
             </tr>
         </tbody>
     </table>
@@ -37,7 +37,7 @@
             <a href="{{ path('bpeh_pagemeta_index') }}">Back to the list</a>
         </li>
         <li>
-            <a href="{{ path('bpeh_pagemeta_edit', { 'id': pageMetum.id }) }}">Edit</a>
+            <a href="{{ path('bpeh_pagemeta_edit', { 'id': pageMeta.id }) }}">Edit</a>
         </li>
         <li>
             {{ form_start(delete_form) }}

@@ -14,6 +14,10 @@
                 <source>flash_reorder_edit_success</source>
                 <target>menu has been reordered successfully</target>
             </trans-unit>
+            <trans-unit id="4">
+                <source>one_locale_per_pagemeta_only</source>
+                <target>Sorry, there is already a pagemeta with this locale. Please delete that pagemeta or use a different locale.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

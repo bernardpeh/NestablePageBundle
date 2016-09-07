@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * Page
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Bpeh\NestablePageBundle\Entity\PageRepository")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")

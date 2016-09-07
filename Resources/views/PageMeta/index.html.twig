@@ -16,21 +16,21 @@
             </tr>
         </thead>
         <tbody>
-        {% for pageMetum in pageMetas %}
+        {% for pageMeta in pageMetas %}
             <tr>
-                <td><a href="{{ path('bpeh_pagemeta_show', { 'id': pageMetum.id }) }}">{{ pageMetum.id }}</a></td>
-                <td>{{ pageMetum.pagetitle }}</td>
-                <td>{{ pageMetum.menutitle }}</td>
-                <td>{{ pageMetum.locale }}</td>
-                <td>{{ pageMetum.shortdescription }}</td>
-                <td>{{ pageMetum.content }}</td>
+                <td><a href="{{ path('bpeh_pagemeta_show', { 'id': pageMeta.id }) }}">{{ pageMeta.id }}</a></td>
+                <td>{{ pageMeta.pagetitle }}</td>
+                <td>{{ pageMeta.menutitle }}</td>
+                <td>{{ pageMeta.locale }}</td>
+                <td>{{ pageMeta.shortdescription }}</td>
+                <td>{{ pageMeta.content }}</td>
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('bpeh_pagemeta_show', { 'id': pageMetum.id }) }}">show</a>
+                            <a href="{{ path('bpeh_pagemeta_show', { 'id': pageMeta.id }) }}">show</a>
                         </li>
                         <li>
-                            <a href="{{ path('bpeh_pagemeta_edit', { 'id': pageMetum.id }) }}">edit</a>
+                            <a href="{{ path('bpeh_pagemeta_edit', { 'id': pageMeta.id }) }}">edit</a>
                         </li>
                     </ul>
                 </td>
