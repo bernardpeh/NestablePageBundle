@@ -3,7 +3,6 @@
 namespace Bpeh\NestablePageBundle\Entity;
 
 use Bpeh\NestablePageBundle\Entity\Page;
-use phpDocumentor\Reflection\Types\Boolean;
 
 /**
  * PageMetaRepository
