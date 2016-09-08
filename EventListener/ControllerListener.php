@@ -4,8 +4,8 @@ namespace Bpeh\NestablePageBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Bpeh\NestablePageBundle\PageTestBundle\Controller\PageController;
-use Bpeh\NestablePageBundle\PageTestBundle\Controller\PageMetaController;
+use Bpeh\NestablePageBundle\Controller\PageController;
+use Bpeh\NestablePageBundle\Controller\PageMetaController;
 
 class ControllerListener
 {

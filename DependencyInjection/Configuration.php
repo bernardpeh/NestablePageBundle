@@ -24,10 +24,10 @@ class Configuration implements ConfigurationInterface
         // more information on that topic.
         $rootNode
             ->children()
-                ->scalarNode('page_entity')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Entity\Page')->end()
-                ->scalarNode('pagemeta_entity')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Entity\PageMeta')->end()
-                ->scalarNode('page_form_type')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Form\PageType')->end()
-                ->scalarNode('pagemeta_form_type')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Form\PageMetaType')->end()
+                ->scalarNode('page_entity')->defaultValue('Bpeh\NestablePageBundle\Entity\Page')->end()
+                ->scalarNode('pagemeta_entity')->defaultValue('Bpeh\NestablePageBundle\Entity\PageMeta')->end()
+                ->scalarNode('page_form_type')->defaultValue('Bpeh\NestablePageBundle\Form\PageType')->end()
+                ->scalarNode('pagemeta_form_type')->defaultValue('Bpeh\NestablePageBundle\Form\PageMetaType')->end()
             ->end()
         ;
         return $treeBuilder;

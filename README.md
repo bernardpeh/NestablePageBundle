@@ -6,7 +6,7 @@ The techniques used in creating this bundle simply highlight the possibilities a
 
 The best way to get started is to install the demo bundle. The demo bundle (PageTestBundle) extends NestablePageBundle and has the controllers, entities and formtypes configured. Hack it to your liking!
 
-## Installing the Demo
+## Installation
 
 In composer.json,
 
@@ -36,7 +36,6 @@ in AppKernel.php, init bundle
 ```
 ...
 new Bpeh\NestablePageBundle\BpehNestablePageBundle(),
-new Bpeh\NestablePageBundle\PageTestBundle\PageTestBundle(),
 ...
 ```
 
@@ -46,10 +45,10 @@ In config.yml
 doctrine:
     orm:
         resolve_target_entities:
-            Bpeh\NestablePageBundle\Model\PageBase: Bpeh\NestablePageBundle\PageTestBundle\Entity\Page
-            Bpeh\NestablePageBundle\Model\PageMetaBase: Bpeh\NestablePageBundle\PageTestBundle\Entity\PageMeta
+            Bpeh\NestablePageBundle\Model\PageBase: Bpeh\NestablePageBundle\Entity\Page
+            Bpeh\NestablePageBundle\Model\PageMetaBase: Bpeh\NestablePageBundle\Entity\PageMeta
 
-# Leave default for demo. override this part to use your own entities and formtypes
+# Leave default. override this part if you are extending the bundle
 
 # bpeh_nestable_page:
 #     page_entity: YourBundle\Entity\Page
@@ -60,11 +59,10 @@ doctrine:
 
 In routing.yml, add the routes
 
-
 ```
 ...
-my_test_page:
-    resource: "@PageTestBundle/Controller/"
+nestable_page:
+    resource: "@BpehNestablePageBundle/Controller/"
     type:     annotation
     prefix:   /pagetest
 ...
@@ -73,16 +71,25 @@ my_test_page:
 To test if everything is working, go to
 
 ```
-http://yoururl/pagetest
+http://yoururl/bpeh_page
 ```
 
-## Functional Testing on Demo Bundle
+## Functional Testing
 
 In symfony root installation
 
 ```
-phpunit -c app bpeh/nestable-page-bundle/PageTestBundle
+phpunit -c app vendor/bpeh/nestable-page-bundle/PageTestBundle
+
+## to test on single function
+phpunit -c app --filter testSingleLocalePerPageMeta vendor/bpeh/nestable-page-bundle/
 ```
+
+## Extending the Bundle
+
+Refer to the demo PageTestBundle folder.
+
+Remember to configure the resolve_target_entities and bpeh_nestable_page parameters in config.yml
 
 ## Contributing
 
