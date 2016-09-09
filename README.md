@@ -36,6 +36,8 @@ in AppKernel.php, init bundle
 ```
 ...
 new Bpeh\NestablePageBundle\BpehNestablePageBundle(),
+# if installing the demo bundle
+new Bpeh\NestablePageBundle\PageTestBundle\PageTestBundle(),
 ...
 ```
 
@@ -45,16 +47,9 @@ In config.yml
 doctrine:
     orm:
         resolve_target_entities:
-            Bpeh\NestablePageBundle\Model\PageBase: Bpeh\NestablePageBundle\Entity\Page
-            Bpeh\NestablePageBundle\Model\PageMetaBase: Bpeh\NestablePageBundle\Entity\PageMeta
+            Bpeh\NestablePageBundle\Model\PageBase: Bpeh\NestablePageBundle\PageTestBundle\Entity\Page
+            Bpeh\NestablePageBundle\Model\PageMetaBase: Bpeh\NestablePageBundle\PageTestBundle\Entity\PageMeta
 
-# Leave default. override this part if you are extending the bundle
-
-# bpeh_nestable_page:
-#     page_entity: YourBundle\Entity\Page
-#     pagemeta_entity: YourBundle\Entity\PageMeta
-#     page_form_type: YourBundle\PageTestBundle\Form\PageType
-#     pagemeta_form_type: YourBundle\PageTestBundle\Form\PageMetaType
 ```
 
 In routing.yml, add the routes
@@ -62,9 +57,9 @@ In routing.yml, add the routes
 ```
 ...
 nestable_page:
-    resource: "@BpehNestablePageBundle/Controller/"
+    resource: "@PageTestBundle/Controller/"
     type:     annotation
-    prefix:   /pagetest
+    prefix:   /
 ...
 ```
 
@@ -87,9 +82,36 @@ phpunit -c app --filter testSingleLocalePerPageMeta vendor/bpeh/nestable-page-bu
 
 ## Extending the Bundle
 
-Refer to the demo PageTestBundle folder.
+The installation documentation here is for the demo PageTestBundle folder.
 
-Remember to configure the resolve_target_entities and bpeh_nestable_page parameters in config.yml
+To create your own bundle, remember to configure the resolve_target_entities and bpeh_nestable_page parameters in config.yml
+
+```
+doctrine:
+    orm:
+        resolve_target_entities:
+            Bpeh\NestablePageBundle\Model\PageBase: YourBundle\Entity\Page
+            Bpeh\NestablePageBundle\Model\PageMetaBase: YourBundle\Entity\PageMeta
+
+bpeh_nestable_page:
+      page_entity: YourBundle\Entity\Page
+      pagemeta_entity: YourBundle\Entity\PageMeta
+      page_form_type: YourBundle\Form\PageType
+      pagemeta_form_type: YourBundle\Form\PageMetaType
+      # Customise the template if you want.
+      # page_view_list: YourBundle:list.html.twig
+      # page_view_new: YourBundle:new.html.twig
+      # page_view_edit: YourBundle:edit.html.twig
+      # page_view_show: YourBundle:show.html.twig
+      # pagemeta_view_index: YourBundle:index.html.twig
+      # pagemeta_view_new: YourBundle:new.html.twig
+      # pagemeta_view_edit: YourBundle:edit.html.twig
+      # pagemeta_view_show: YourBundle:show.html.twig
+```
+
+## TO-Dos
+
+Lots
 
 ## Contributing
 

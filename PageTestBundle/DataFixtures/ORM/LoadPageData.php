@@ -1,13 +1,13 @@
 <?php
-namespace Bpeh\NestablePageBundle\DataFixtures\ORM;
+namespace Bpeh\NestablePageBundle\PageTestBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Bpeh\NestablePageBundle\Entity\Page;
-use Bpeh\NestablePageBundle\Entity\PageMeta;
+use Bpeh\NestablePageBundle\PageTestBundle\Entity\Page;
+use Bpeh\NestablePageBundle\PageTestBundle\Entity\PageMeta;
 
 class LoadPageData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {

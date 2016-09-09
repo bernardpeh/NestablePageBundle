@@ -1,6 +1,6 @@
 <?php
 
-namespace Bpeh\NestablePageBundle\Tests\Controller;
+namespace Bpeh\NestablePageBundle\PageTestBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\StringInput;
@@ -35,7 +35,7 @@ class PageControllerTest extends WebTestCase
 	public function testListPages()
 	{
 		$client = static::createClient();
-		$crawler = $client->request('GET', '/bpeh_page/list');
+		$crawler = $client->request('GET', '/pagetest/list');
 		// i should see why_songbird text
 		$this->assertContains(
 			'why_songbird',
@@ -58,7 +58,7 @@ class PageControllerTest extends WebTestCase
 	{
 		$client = static::createClient();
 		// go to main listing page
-		$crawler = $client->request('GET', '/bpeh_page/list');
+		$crawler = $client->request('GET', '/pagetest/list');
 		// click on contact_us link
 		$crawler = $client->click($crawler->selectLink('contact_us')->link());
 		// i should see "contact_us"
@@ -84,7 +84,7 @@ class PageControllerTest extends WebTestCase
 		// home is dragged under about and in the second position
 		$crawler = $client->request(
 			'POST',
-			'/bpeh_page/reorder',
+			'/pagetest/reorder',
 			array(
 				'id' => 1,
 				'parentId' => 2,
@@ -99,7 +99,7 @@ class PageControllerTest extends WebTestCase
 			$client->getResponse()->getContent()
 		);
 		// go back to page list again
-		$crawler = $client->request('GET', '/bpeh_page/list');
+		$crawler = $client->request('GET', '/pagetest/list');
 		// there should be 2 parent menus
 		$nodes = $crawler->filterXPath('//div[@id="nestable"]/ol');
 		$this->assertEquals(count($nodes->children()), 2);
@@ -116,7 +116,7 @@ class PageControllerTest extends WebTestCase
 	public function testEditHomePage()
 	{
 		$client = static::createClient();
-		$crawler = $client->request('GET', '/bpeh_page/1/edit');
+		$crawler = $client->request('GET', '/pagetest/1/edit');
 		$form = $crawler->selectButton('Edit')->form(array(
 			'page[slug]'  => 'home1',
 		));
@@ -137,7 +137,7 @@ class PageControllerTest extends WebTestCase
 	public function testCreateDeleteTestPage()
 	{
 		$client = static::createClient();
-		$crawler = $client->request('GET', '/bpeh_page/new');
+		$crawler = $client->request('GET', '/pagetest/new');
 		$form = $crawler->selectButton('Create')->form(array(
 			'page[slug]'  => 'test_page',
 			'page[isPublished]'  => true,
@@ -172,7 +172,7 @@ class PageControllerTest extends WebTestCase
 		$form = $crawler->selectButton('Delete')->form();
 		$crawler = $client->submit($form);
 		// go back to the pagemeta list again and i should NOT see the test_page anymore
-		$crawler = $client->request('GET', '/bpeh_pagemeta');
+		$crawler = $client->request('GET', '/pagemeta_test');
 		$this->assertNotContains(
 			'test page title',
 			$client->getResponse()->getContent()
@@ -188,7 +188,7 @@ class PageControllerTest extends WebTestCase
 	{
 		$client = static::createClient();
 		// now if we remove contact_us page, ie id 5, all its page meta should be deleted
-		$crawler = $client->request('GET', '/bpeh_page/5');
+		$crawler = $client->request('GET', '/pagetest/5');
 		$form = $crawler->selectButton('Delete')->form();
 		$crawler = $client->submit($form);
 		$crawler = $client->followRedirect();
@@ -197,7 +197,7 @@ class PageControllerTest extends WebTestCase
 			$client->getResponse()->getContent()
 		);
 		// we now connect to do and make sure the related pagemetas are no longer in the pagemeta table.
-		$res = $client->getContainer()->get('doctrine')->getRepository('BpehNestablePageBundle:PageMeta')->findByPage(5);
+		$res = $client->getContainer()->get('doctrine')->getRepository('PageTestBundle:PageMeta')->findByPage(5);
 		$this->assertEquals(0, count($res));
 	}
 
@@ -210,7 +210,7 @@ class PageControllerTest extends WebTestCase
 	{
 		$client = static::createClient();
 		// go to about page
-		$crawler = $client->request('GET', '/bpeh_page/2');
+		$crawler = $client->request('GET', '/pagetest/2');
 		$crawler = $client->click($crawler->selectLink('Add PageMeta')->link());
 		// for existing data, we know that en and fr has already been defined. if we try adding a new pagemeta now, it should fail
 		$form = $crawler->selectButton('Create')->form(array(

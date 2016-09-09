@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Bpeh\NestablePageBundle\Entity\PageMeta;
 
 /**
@@ -21,16 +20,25 @@ class PageMetaController extends Controller
 
 	private $entity_meta;
 
-	private $page_form_type;
-
 	private $page_meta_form_type;
+
+	private $pagemeta_view_index;
+
+	private $pagemeta_view_new;
+
+	private $pagemeta_view_edit;
+
+	private $pagemeta_view_show;
 
 	public function init()
 	{
 		$this->entity = $this->container->getParameter('bpeh_nestable_page.page_entity');
 		$this->entity_meta = $this->container->getParameter('bpeh_nestable_page.pagemeta_entity');
-		$this->page_form_type = $this->container->getParameter('bpeh_nestable_page.page_form_type');
 		$this->page_meta_form_type = $this->container->getParameter('bpeh_nestable_page.pagemeta_form_type');
+		$this->pagemeta_view_index = $this->container->getparameter('bpeh_nestable_page.pagemeta_view_index');
+		$this->pagemeta_view_new = $this->container->getparameter('bpeh_nestable_page.pagemeta_view_new');
+		$this->pagemeta_view_edit = $this->container->getparameter('bpeh_nestable_page.pagemeta_view_edit');
+		$this->pagemeta_view_show = $this->container->getparameter('bpeh_nestable_page.pagemeta_view_show');
 	}
 
 	/**
@@ -38,7 +46,6 @@ class PageMetaController extends Controller
 	 *
 	 * @Route("/", name="bpeh_pagemeta_index")
 	 * @Method("GET")
-	 * @Template()
 	 */
 	public function indexAction()
 	{
@@ -46,9 +53,10 @@ class PageMetaController extends Controller
 
 		$pageMetas = $em->getRepository($this->entity_meta)->findAll();
 
-		return array(
+		return $this->render($this->pagemeta_view_index, array(
 			'pageMetas' => $pageMetas,
-		);
+		));
+
 	}
 
 	/**
@@ -56,7 +64,6 @@ class PageMetaController extends Controller
 	 *
 	 * @Route("/new", name="bpeh_pagemeta_new")
 	 * @Method({"GET", "POST"})
-	 * @Template()
 	 */
 	public function newAction(Request $request)
 	{
@@ -76,10 +83,11 @@ class PageMetaController extends Controller
 			}
 		}
 
-		return array(
+		return $this->render($this->pagemeta_view_new, array(
 			'pageMeta' => $pageMeta,
 			'form' => $form->createView(),
-		);
+		));
+
 	}
 
 	/**
@@ -87,7 +95,6 @@ class PageMetaController extends Controller
 	 *
 	 * @Route("/{id}", name="bpeh_pagemeta_show")
 	 * @Method("GET")
-	 * @Template()
 	 */
 	public function showAction(Request $request)
 	{
@@ -97,10 +104,10 @@ class PageMetaController extends Controller
 
 		$deleteForm = $this->createDeleteForm($pageMeta);
 
-		return array(
+		return $this->render($this->pagemeta_view_show, array(
 			'pageMeta' => $pageMeta,
 			'delete_form' => $deleteForm->createView(),
-		);
+		));
 	}
 
 	/**
@@ -108,7 +115,6 @@ class PageMetaController extends Controller
 	 *
 	 * @Route("/{id}/edit", name="bpeh_pagemeta_edit")
 	 * @Method({"GET", "POST"})
-	 * @Template()
 	 */
 	public function editAction(Request $request)
 	{
@@ -142,11 +148,11 @@ class PageMetaController extends Controller
 			}
 		}
 
-		return array(
+		return $this->render($this->pagemeta_view_edit, array(
 			'pageMeta' => $pageMeta,
 			'edit_form' => $editForm->createView(),
 			'delete_form' => $deleteForm->createView(),
-		);
+		));
 	}
 
 	/**

@@ -5,8 +5,6 @@ use Bpeh\NestablePageBundle\Model\PageMetaBase;
 
 /**
  * @ORM\MappedSuperclass
- * @ORM\Table(name="pagemeta")
- * @ORM\Entity(repositoryClass="Bpeh\NestablePageBundle\Entity\PageMetaRepository")
  */
 class PageMeta extends PageMetaBase
 {

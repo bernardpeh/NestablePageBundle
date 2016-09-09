@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * PageMeta controller.
- * @Route("/bpeh_pagemeta")
+ * @Route("/pagemeta_test")
  */
 class PageMetaController extends BaseController
 {

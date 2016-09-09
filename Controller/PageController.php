@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -24,14 +23,23 @@ class PageController extends Controller
 
     private $page_form_type;
 
-	private $page_meta_form_type;
+	private $page_view_list;
+
+	private $page_view_new;
+
+	private $page_view_edit;
+
+	private $page_view_show;
 
     public function init()
     {
     	$this->entity = $this->container->getParameter('bpeh_nestable_page.page_entity');
 	    $this->entity_meta = $this->container->getParameter('bpeh_nestable_page.pagemeta_entity');
         $this->page_form_type = $this->container->getParameter('bpeh_nestable_page.page_form_type');
-	    $this->page_meta_form_type = $this->container->getParameter('bpeh_nestable_page.pagemeta_form_type');
+	    $this->page_view_list = $this->container->getparameter('bpeh_nestable_page.page_view_list');
+	    $this->page_view_new = $this->container->getparameter('bpeh_nestable_page.page_view_new');
+	    $this->page_view_edit = $this->container->getparameter('bpeh_nestable_page.page_view_edit');
+	    $this->page_view_show = $this->container->getparameter('bpeh_nestable_page.page_view_show');
     }
 
 	/**
@@ -39,7 +47,6 @@ class PageController extends Controller
 	 *
 	 * @Route("/", name="bpeh_page")
 	 * @Method("GET")
-	 * @Template()
 	 *
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
 	 */
@@ -53,7 +60,6 @@ class PageController extends Controller
 	 *
 	 * @Route("/list", name="bpeh_page_list")
 	 * @Method("GET")
-	 * @Template()
 	 *
 	 * @return array
 	 */
@@ -62,9 +68,9 @@ class PageController extends Controller
     	$em = $this->getDoctrine()->getManager();
         $rootMenuItems = $em->getRepository($this->entity)->findParent();
 
-        return array(
+        return $this->render($this->page_view_list, array(
             'tree' => $rootMenuItems,
-        );
+        ));
     }
 
 	/**
@@ -72,7 +78,6 @@ class PageController extends Controller
 	 *
 	 * @Route("/reorder", name="bpeh_page_reorder")
 	 * @Method("POST")
-	 * @Template()
 	 *
 	 * @param Request $request
 	 *
@@ -102,7 +107,6 @@ class PageController extends Controller
 	 *
 	 * @Route("/new", name="bpeh_page_new")
 	 * @Method({"GET", "POST"})
-	 * @Template()
 	 *
 	 * @param Request $request
 	 *
@@ -122,10 +126,10 @@ class PageController extends Controller
 		    return $this->redirectToRoute('bpeh_page_show', array('id' => $page->getId()));
 	    }
 
-	    return array(
+	    return $this->render($this->page_view_new, array(
 		    'page' => $page,
 		    'form' => $form->createView(),
-	    );
+	    ));
     }
 
 	/**
@@ -133,7 +137,6 @@ class PageController extends Controller
 	 *
 	 * @Route("/{id}", name="bpeh_page_show")
 	 * @Method("GET")
-	 * @Template()
 	 *
 	 * @param Request $request
 	 *
@@ -149,11 +152,12 @@ class PageController extends Controller
 
 		$deleteForm = $this->createDeleteForm($page);
 
-		return array(
+		return $this->render($this->page_view_show, array(
 			'page' => $page,
 			'pageMeta' => $pageMeta,
 			'delete_form' => $deleteForm->createView(),
-		);
+		));
+
 	}
 
 	/**
@@ -161,7 +165,6 @@ class PageController extends Controller
 	 *
 	 * @Route("/{id}/edit", name="bpeh_page_edit")
 	 * @Method({"GET", "POST"})
-	 * @Template()
 	 *
 	 * @param Request $request
 	 *
@@ -183,11 +186,12 @@ class PageController extends Controller
 			return $this->redirectToRoute('bpeh_page_edit', array('id' => $page->getId()));
 		}
 
-		return array(
+		return $this->render($this->page_view_edit, array(
 			'page' => $page,
 			'edit_form' => $editForm->createView(),
 			'delete_form' => $deleteForm->createView(),
-		);
+		));
+
 	}
 
 	/**

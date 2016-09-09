@@ -5,9 +5,6 @@ use Bpeh\NestablePageBundle\Model\PageBase;
 
 /**
  * @ORM\MappedSuperclass
- * @ORM\Table(name="page")
- * @ORM\Entity(repositoryClass="Bpeh\NestablePageBundle\Entity\PageRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class Page extends PageBase
 {

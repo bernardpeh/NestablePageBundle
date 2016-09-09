@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * Page controller.
- * @Route("/bpeh_page")
+ * @Route("/pagetest")
  */
 class PageController extends BaseController
 {

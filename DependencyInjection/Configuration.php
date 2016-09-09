@@ -24,10 +24,18 @@ class Configuration implements ConfigurationInterface
         // more information on that topic.
         $rootNode
             ->children()
-                ->scalarNode('page_entity')->defaultValue('Bpeh\NestablePageBundle\Entity\Page')->end()
-                ->scalarNode('pagemeta_entity')->defaultValue('Bpeh\NestablePageBundle\Entity\PageMeta')->end()
-                ->scalarNode('page_form_type')->defaultValue('Bpeh\NestablePageBundle\Form\PageType')->end()
-                ->scalarNode('pagemeta_form_type')->defaultValue('Bpeh\NestablePageBundle\Form\PageMetaType')->end()
+                ->scalarNode('page_entity')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Entity\Page')->end()
+                ->scalarNode('pagemeta_entity')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Entity\PageMeta')->end()
+                ->scalarNode('page_form_type')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Form\PageType')->end()
+                ->scalarNode('pagemeta_form_type')->defaultValue('Bpeh\NestablePageBundle\PageTestBundle\Form\PageMetaType')->end()
+	            ->scalarNode('page_view_list')->defaultValue('BpehNestablePageBundle:Page:list.html.twig')->end()
+		        ->scalarNode('page_view_edit')->defaultValue('BpehNestablePageBundle:Page:edit.html.twig')->end()
+		        ->scalarNode('page_view_show')->defaultValue('BpehNestablePageBundle:Page:show.html.twig')->end()
+		        ->scalarNode('page_view_new')->defaultValue('BpehNestablePageBundle:Page:new.html.twig')->end()
+		        ->scalarNode('pagemeta_view_new')->defaultValue('BpehNestablePageBundle:PageMeta:new.html.twig')->end()
+		        ->scalarNode('pagemeta_view_edit')->defaultValue('BpehNestablePageBundle:PageMeta:edit.html.twig')->end()
+		        ->scalarNode('pagemeta_view_index')->defaultValue('BpehNestablePageBundle:PageMeta:index.html.twig')->end()
+		        ->scalarNode('pagemeta_view_show')->defaultValue('BpehNestablePageBundle:PageMeta:show.html.twig')->end()
             ->end()
         ;
         return $treeBuilder;

@@ -26,7 +26,14 @@ class BpehNestablePageExtension extends Extension
         $container->setParameter( 'bpeh_nestable_page.pagemeta_entity', $config[ 'pagemeta_entity' ]);
         $container->setParameter( 'bpeh_nestable_page.page_form_type', $config[ 'page_form_type' ]);
         $container->setParameter( 'bpeh_nestable_page.pagemeta_form_type', $config[ 'pagemeta_form_type' ]);
-
+	    $container->setParameter( 'bpeh_nestable_page.page_view_list', $config[ 'page_view_list' ]);
+	    $container->setParameter( 'bpeh_nestable_page.page_view_new', $config[ 'page_view_new' ]);
+	    $container->setParameter( 'bpeh_nestable_page.page_view_edit', $config[ 'page_view_edit' ]);
+	    $container->setParameter( 'bpeh_nestable_page.page_view_show', $config[ 'page_view_show' ]);
+	    $container->setParameter( 'bpeh_nestable_page.pagemeta_view_index', $config[ 'pagemeta_view_index' ]);
+	    $container->setParameter( 'bpeh_nestable_page.pagemeta_view_edit', $config[ 'pagemeta_view_edit' ]);
+	    $container->setParameter( 'bpeh_nestable_page.pagemeta_view_new', $config[ 'pagemeta_view_new' ]);
+	    $container->setParameter( 'bpeh_nestable_page.pagemeta_view_show', $config[ 'pagemeta_view_show' ]);
 	    $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 	    $loader->load('services.yml');
     }
