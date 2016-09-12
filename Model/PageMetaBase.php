@@ -219,6 +219,4 @@ abstract class PageMetaBase
     {
         return $this->page;
     }
-
-    
 }

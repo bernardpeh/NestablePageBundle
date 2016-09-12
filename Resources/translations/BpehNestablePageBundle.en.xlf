@@ -18,6 +18,22 @@
                 <source>one_locale_per_pagemeta_only</source>
                 <target>Sorry, there is already a pagemeta with this locale. Please delete that pagemeta or use a different locale.</target>
             </trans-unit>
+            <trans-unit id="5">
+                <source>expand_all</source>
+                <target>expand all</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>collapse_all</source>
+                <target>collapse all</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>new_page</source>
+                <target>new page</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>new_pagemeta</source>
+                <target>new pagemeta</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
