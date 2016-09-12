@@ -59,7 +59,7 @@ abstract class PageMetaBase
 
     /**
      * @ORM\ManyToOne(targetEntity="Bpeh\NestablePageBundle\Model\PageBase", inversedBy="pageMetas")
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="CASCADE")}
+     * @ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)}
      */
     protected $page;
 
@@ -217,6 +217,6 @@ abstract class PageMetaBase
      */
     public function getPage()
     {
-        return $this->page;
+    	return $this->page;
     }
 }
