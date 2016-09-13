@@ -63,6 +63,20 @@ abstract class PageMetaBase
      */
     protected $page;
 
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="modified", type="datetime")
+	 */
+	protected $modified;
+
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="created", type="datetime")
+	 */
+	protected $created;
+
     /**
      * constructor
      */
@@ -81,6 +95,68 @@ abstract class PageMetaBase
     {
         return $this->id;
     }
+
+
+	/**
+	 * @ORM\PrePersist
+	 */
+	public function prePersist()
+	{
+		// update the modified time
+		$this->setModified(new \DateTime());
+
+		// for newly created entries
+		if ($this->getCreated() == null) {
+			$this->setCreated(new \DateTime('now'));
+		}
+		$this->created = new \DateTime();
+	}
+
+	/**
+	 * Set modified
+	 *
+	 * @param \DateTime $modified
+	 * @return Page
+	 */
+	public function setModified($modified)
+	{
+		$this->modified = $modified;
+
+		return $this;
+	}
+
+	/**
+	 * Get modified
+	 *
+	 * @return \DateTime
+	 */
+	public function getModified()
+	{
+		return $this->modified;
+	}
+
+	/**
+	 * Set created
+	 *
+	 * @param \DateTime $created
+	 * @return Page
+	 */
+	public function setCreated($created)
+	{
+		$this->created = $created;
+
+		return $this;
+	}
+
+	/**
+	 * Get created
+	 *
+	 * @return \DateTime
+	 */
+	public function getCreated()
+	{
+		return $this->created;
+	}
 
     /**
      * Set page_title
