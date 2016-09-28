@@ -56,29 +56,31 @@
         	parentId = (parentId == id || typeof(parentId)  === "undefined") ?  '' : parentId; 
 
         	after = JSON.stringify($('.dd').nestable('serialize'));
-        	
-	        if (before != after) {
-	            $.ajax({
-	                type: "POST",
-	                url: "{{ path('bpeh_page_reorder') }}",
-	                data: {id: id, parentId: parentId, position: position},
-	                success: function (data, dataType) {
-	                	if (data.success) {
-	                		$('.alert').addClass('alert-success');
-	                	}
-	                	else {
-	                		$('.alert').addClass('alert-danger');
-	                	}
-	                	$('.alert').html(data.message);
-	                	$('.alert').fadeTo( 0 , 1, function() {});
-	                	$('.alert').fadeTo( 4000 , 0, function() {});
-	                },
 
-	                error: function (XMLHttpRequest, textStatus, errorThrown) {
-	                    console.log(XMLHttpRequest);
-	                }
-	            });
-	            before = after;
+	        token = '{{ csrf_token("bpeh_page_reorder") }}';
+
+	        if (before != after) {
+		        $.ajax({
+			        type: "POST",
+			        url: "{{ path('bpeh_page_reorder') }}",
+			        data: { id: id, parentId: parentId, position: position, csrf: token },
+			        success: function (data, dataType) {
+				        if (data.success) {
+					        $('.alert').addClass('alert-success');
+				        }
+				        else {
+					        $('.alert').addClass('alert-danger');
+				        }
+				        $('.alert').html(data.message);
+				        $('.alert').fadeTo( 0 , 1, function() {});
+				        $('.alert').fadeTo( 4000 , 0, function() {});
+			        },
+
+			        error: function (XMLHttpRequest, textStatus, errorThrown) {
+				        console.log(XMLHttpRequest);
+			        }
+		        });
+		        before = after;
 	        }
 	    });
     });

@@ -88,6 +88,13 @@ class PageController extends Controller
 	    $em = $this->getDoctrine()->getManager();
 	    // id of affected element
 	    $id = $request->get('id');
+
+	    // if invalid token, fail silently
+	    if (!$this->isCsrfTokenValid('bpeh_page_reorder', $request->get('csrf'))) {
+		    // fail silently
+		    return;
+	    }
+
 	    // parent Id
 	    $parentId = ($request->get('parentId') == '') ? null : $request->get('parentId');
 	    // new sequence of this element. 0 means first element.
@@ -99,7 +106,6 @@ class PageController extends Controller
 		    array('message' => $this->get('translator')->trans($result[0], array(), 'BpehNestablePageBundle')
 		    , 'success' => $result[1])
 	    );
-
     }
 
 	/**
