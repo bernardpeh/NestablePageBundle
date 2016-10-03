@@ -2,7 +2,7 @@
 
 namespace Bpeh\NestablePageBundle\PageTestBundle\Entity;
 
-use Bpeh\NestablePageBundle\Entity\Page as BasePage;
+use Bpeh\NestablePageBundle\Model\PageBase;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,8 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Bpeh\NestablePageBundle\PageTestBundle\Entity\PageRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Page extends BasePage
-{
+class Page extends PageBase
     /**
      * @var integer
      *

@@ -2,7 +2,7 @@
 
 namespace Bpeh\NestablePageBundle\Entity;
 
-use Bpeh\NestablePageBundle\Entity\Page;
+use Bpeh\NestablePageBundle\Model\PageBase;
 
 /**
  * PageMetaRepository
@@ -21,7 +21,7 @@ class PageMetaRepository extends \Doctrine\ORM\EntityRepository {
 	 *
 	 * @return mixed
 	 */
-	public function findPageMetaByLocale( Page $page, $locale, $count = false ) {
+	public function findPageMetaByLocale( PageBase $page, $locale, $count = false ) {
 
 		$qb = $this->createQueryBuilder( 'pm' );
 
