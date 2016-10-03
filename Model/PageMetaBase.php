@@ -7,9 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PageMeta
  *
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"pagemetabase" = "PageMetaBase", "pagemeta" = "Bpeh\NestablePageBundle\Entity\PageMeta"})
  */
 abstract class PageMetaBase
 {
