@@ -2,7 +2,7 @@
 
 namespace Bpeh\NestablePageBundle\Controller;
 
-use Bpeh\NestablePageBundle\Entity\Page;
+use Bpeh\NestablePageBundle\Model\PageBase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -231,7 +231,7 @@ class PageController extends Controller
 	 *
 	 * @return \Symfony\Component\Form\Form The form
 	 */
-	private function createDeleteForm(Page $page)
+	private function createDeleteForm(PageBase $page)
 	{
 		return $this->createFormBuilder()
 		            ->setAction($this->generateUrl('bpeh_page_delete', array('id' => $page->getId())))
