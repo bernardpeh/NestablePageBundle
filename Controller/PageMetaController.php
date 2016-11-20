@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Bpeh\NestablePageBundle\Entity\PageMeta;
+use Bpeh\NestablePageBundle\Model\PageMetaBase;
 
 /**
  * PageMeta controller.
@@ -180,11 +180,11 @@ class PageMetaController extends Controller
 	/**
 	 * Creates a form to delete a PageMeta entity.
 	 *
-	 * @param PageMeta $pageMetum The PageMeta entity
+	 * @param PageMetaBase $pageMetum The PageMeta entity
 	 *
 	 * @return \Symfony\Component\Form\Form The form
 	 */
-	private function createDeleteForm(PageMeta $pageMeta)
+	private function createDeleteForm(PageMetaBase $pageMeta)
 	{
 		return $this->createFormBuilder()
 		            ->setAction($this->generateUrl('bpeh_pagemeta_delete', array('id' => $pageMeta->getId())))
