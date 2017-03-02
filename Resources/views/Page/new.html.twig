@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% trans_default_domain "BpehNestablePageBundle" %}
+
 {% block body %}
-    <h1>Page creation</h1>
+    <h1>{{ 'new_page' |trans }}</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
@@ -10,7 +12,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('bpeh_page_list') }}">Back to the list</a>
+            <a href="{{ path('bpeh_page_list') }}">{{ 'back_to_list' | trans }}</a>
         </li>
     </ul>
 {% endblock %}

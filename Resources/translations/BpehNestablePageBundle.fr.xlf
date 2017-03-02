@@ -34,6 +34,58 @@
                 <source>new_pagemeta</source>
                 <target>nouveau pagemeta</target>
             </trans-unit>
+            <trans-unit id="9">
+                <source>edit_page</source>
+                <target>Modifier la page</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>edit_pagemeta</source>
+                <target>Modifier la pagemeta</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>view_page</source>
+                <target>Voir page</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>view_pagemeta</source>
+                <target>Voir pageMeta</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>delete_page</source>
+                <target>Effacer page</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>delete_pagemeta</source>
+                <target>Effacer pageMeta</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>page</source>
+                <target>Page</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>pagemeta</source>
+                <target>PageMeta</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>back_to_list</source>
+                <target>Retour à la liste</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>Slug</source>
+                <target>Slug</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>Is published</source>
+                <target>est publié?</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>Modified</source>
+                <target>Modifié</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>Created</source>
+                <target>Créé</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

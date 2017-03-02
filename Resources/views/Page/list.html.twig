@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -11,8 +11,8 @@
 	</div>
 
 	{% block main %}
-	    <button type="button" onclick="$('.dd').nestable('expandAll')">{{ 'expand_all'|trans }}</button>
-	    <button type="button" onclick="$('.dd').nestable('collapseAll')">{{ 'collapse_all'|trans }}</button>
+	    <button type="button" onclick="$('.dd').nestable('expandAll')">{{ 'expand_all'|trans({}, 'BpehNestablePageBundle') }}</button>
+	    <button type="button" onclick="$('.dd').nestable('collapseAll')">{{ 'collapse_all'|trans({}, 'BpehNestablePageBundle') }}</button>
 	    <div id="nestable" class="dd">
 	        <ol class="dd-list">
 	            {% include "BpehNestablePageBundle:Page:tree.html.twig" with { 'tree':tree } %}
@@ -20,16 +20,9 @@
 	    </div>
 	{% endblock %}
 
-	<ul class="record_actions">
-	    <li>
-	        <a href="{{ path('bpeh_page_new') }}">
-	            Create New Page
-	        </a>
-	    </li>
-    </ul>
 {% endblock %}
 
-{% block javascripts %}
+{% block script %}
     {{ parent() }}
     <script src="{{ asset('bundles/bpehnestablepage/js/jquery-1.11.3.min.js') }}"></script>
     <script src="{{ asset('bundles/bpehnestablepage/js/jquery.nestable.js') }}"></script>

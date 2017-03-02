@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% trans_default_domain "BpehNestablePageBundle" %}
+
 {% block body %}
-    <h1>Page</h1>
+    <h1>{{ 'page'|trans }}</h1>
 
     <table>
         <tbody>
@@ -34,7 +36,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('bpeh_page_list') }}">Back to the list</a>
+            <a href="{{ path('bpeh_page_list') }}">{{ 'back_to_list' | trans }}</a>
         </li>
         <li>
             <a href="{{ path('bpeh_page_edit', { 'id': page.id }) }}">Edit Page</a>

@@ -20,19 +20,71 @@
             </trans-unit>
             <trans-unit id="5">
                 <source>expand_all</source>
-                <target>expand all</target>
+                <target>Expand All</target>
             </trans-unit>
             <trans-unit id="6">
                 <source>collapse_all</source>
-                <target>collapse all</target>
+                <target>Collapse All</target>
             </trans-unit>
             <trans-unit id="7">
                 <source>new_page</source>
-                <target>new page</target>
+                <target>New Page</target>
             </trans-unit>
             <trans-unit id="8">
                 <source>new_pagemeta</source>
-                <target>new pagemeta</target>
+                <target>New Pagemeta</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>edit_page</source>
+                <target>Edit Page</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>edit_pagemeta</source>
+                <target>Edit PageMeta</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>view_page</source>
+                <target>View Page</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>view_pagemeta</source>
+                <target>View PageMeta</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>delete_page</source>
+                <target>Delete Page</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>delete_pagemeta</source>
+                <target>Delete PageMeta</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>page</source>
+                <target>Page</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>pagemeta</source>
+                <target>PageMeta</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>back_to_list</source>
+                <target>Back to List</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>Slug</source>
+                <target>Slug</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>Is published</source>
+                <target>Is published?</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>Modified</source>
+                <target>Modified</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>Created</source>
+                <target>Created</target>
             </trans-unit>
         </body>
     </file>

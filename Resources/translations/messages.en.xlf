@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>Slug</source>
+                <target>Slug</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Is published</source>
+                <target>Is published?</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Modified</source>
+                <target>Modified</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Created</source>
+                <target>Created</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Sequence</source>
+                <target>Sequence</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Parent</source>
+                <target>Parent</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Page title</source>
+                <target>Slug</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Menu title</source>
+                <target>Menu Title</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Locale</source>
+                <target>Locale</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Short description</source>
+                <target>Short description</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>Content</source>
+                <target>Content</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>Page</source>
+                <target>Page</target>
+            </trans-unit>
+            <trans-unit id="13">
+             <source>Page title</source>
+             <target>Page Title</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

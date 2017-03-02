@@ -2,7 +2,7 @@
 
 namespace Bpeh\NestablePageBundle\Controller;
 
-use Bpeh\NestablePageBundle\Entity\Page;
+use Bpeh\NestablePageBundle\Model\PageBase as Page;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

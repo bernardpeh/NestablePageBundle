@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% trans_default_domain "BpehNestablePageBundle" %}
+
 {% block body %}
     <h1>PageMeta</h1>
 
@@ -34,7 +36,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('bpeh_pagemeta_index') }}">Back to the list</a>
+            <a href="{{ path('bpeh_pagemeta_index') }}">{{ 'back_to_list' | trans }}</a>
         </li>
         <li>
             <a href="{{ path('bpeh_pagemeta_edit', { 'id': pageMeta.id }) }}">Edit</a>

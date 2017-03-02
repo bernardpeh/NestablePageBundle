@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\HasLifecycleCallbacks()
  */
 class Page extends PageBase
+{
     /**
      * @var integer
      *
