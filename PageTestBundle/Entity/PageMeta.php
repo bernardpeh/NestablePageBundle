@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * PageMeta
  *
  * @ORM\Table(name="pagetest_meta")
- * @ORM\Entity(repositoryClass="Bpeh\NestablePageBundle\PageTestBundle\Entity\PageMetaRepository")
+ * @ORM\Entity(repositoryClass="Bpeh\NestablePageBundle\PageTestBundle\Repository\PageMetaRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class PageMeta extends PageMetaBase

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bpeh\NestablePageBundle\Entity;
+namespace Bpeh\NestablePageBundle\Repository;
 
 /**
  * PageRepository

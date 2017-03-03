@@ -1,6 +1,6 @@
 <?php
 
-namespace Bpeh\NestablePageBundle\Entity;
+namespace Bpeh\NestablePageBundle\Repository;
 
 use Bpeh\NestablePageBundle\Model\PageBase;
 
@@ -12,15 +12,12 @@ use Bpeh\NestablePageBundle\Model\PageBase;
  */
 class PageMetaRepository extends \Doctrine\ORM\EntityRepository {
 
-	/**
-	 * find page locale and return object or counter
-	 *
-	 * @param \Bpeh\NestablePageBundle\Entity\Page $page
-	 * @param $locale
-	 * @param bool $count
-	 *
-	 * @return mixed
-	 */
+    /**
+     * @param PageBase $page
+     * @param $locale
+     * @param bool $count
+     * @return mixed
+     */
 	public function findPageMetaByLocale( PageBase $page, $locale, $count = false ) {
 
 		$qb = $this->createQueryBuilder( 'pm' );
