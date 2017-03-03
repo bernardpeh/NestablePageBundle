@@ -6,7 +6,7 @@ use Bpeh\NestablePageBundle\Model\PageBase;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PageMeta
+ * Page
  *
  * @ORM\Table(name="pagetest")
  * @ORM\Entity(repositoryClass="Bpeh\NestablePageBundle\PageTestBundle\Repository\PageRepository")

@@ -70,22 +70,6 @@
                 <source>back_to_list</source>
                 <target>Back to List</target>
             </trans-unit>
-            <trans-unit id="18">
-                <source>Slug</source>
-                <target>Slug</target>
-            </trans-unit>
-            <trans-unit id="19">
-                <source>Is published</source>
-                <target>Is published?</target>
-            </trans-unit>
-            <trans-unit id="20">
-                <source>Modified</source>
-                <target>Modified</target>
-            </trans-unit>
-            <trans-unit id="21">
-                <source>Created</source>
-                <target>Created</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>

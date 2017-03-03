@@ -36,7 +36,7 @@ in AppKernel.php, init bundle
 ```
 ...
 new Bpeh\NestablePageBundle\BpehNestablePageBundle(),
-# if installing the demo bundle
+# if install demo
 new Bpeh\NestablePageBundle\PageTestBundle\PageTestBundle(),
 ...
 ```
@@ -74,17 +74,17 @@ http://yoururl/bpeh_page
 In symfony root installation
 
 ```
-phpunit -c app vendor/bpeh/nestable-page-bundle/PageTestBundle
+phpunit vendor/bpeh/nestable-page-bundle/PageTestBundle
 
 ## to test on single function
-phpunit -c app --filter testSingleLocalePerPageMeta vendor/bpeh/nestable-page-bundle/
+phpunit --filter testSingleLocalePerPageMeta vendor/bpeh/nestable-page-bundle/
 ```
 
 ## Extending the Bundle
 
-The installation documentation here is for the demo PageTestBundle folder.
+You can copy the example in the vendor/bpeh/nestable-page-bundle/PageTestBundle.
 
-To create your own bundle, remember to configure the resolve_target_entities and bpeh_nestable_page parameters in config.yml
+Remember to configure the resolve_target_entities and bpeh_nestable_page parameters in config.yml
 
 ```
 doctrine:
